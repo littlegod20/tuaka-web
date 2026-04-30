@@ -1,0 +1,39 @@
+{
+  "name": "portal",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev":     "vite --port 3001",
+    "dev:all": "concurrently -k -n portal,admin -c cyan,magenta \"vite --port 3001\" \"pnpm --dir apps/admin dev\"",
+    "build": "tsc && vite build",
+    "lint":  "tsc --noEmit",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tuaka/ui":         "workspace:*",
+    "@tuaka/api-client": "workspace:*",
+    "@tanstack/react-query": "^5.18.1",
+    "react":     "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.0"
+  },
+  "devDependencies": {
+    "@tuaka/config":         "workspace:*",
+    "@types/react":          "^18.2.55",
+    "@types/react-dom":      "^18.2.19",
+    "@vitejs/plugin-react":  "^4.2.1",
+    "autoprefixer":          "^10.4.17",
+    "postcss":               "^8.4.35",
+    "tailwindcss":           "^3.4.1",
+    "typescript":            "^5.3.3",
+    "vite":                  "^5.1.0",
+    "concurrently":          "^9.1.2"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "18.3.28",
+      "@types/react-dom": "18.3.7"
+    }
+  }
+}
