@@ -2,9 +2,14 @@
   "name": "@tuaka/config",
   "version": "0.0.1",
   "private": true,
+  "devDependencies": {
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3"
+  },
   "files": [
     "tailwind.config.ts",
     "tsconfig.base.json",
-    "vite.config.base.ts"
+    "fonts.css",
+    "fonts/"
   ]
 }
