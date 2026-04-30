@@ -1,6 +1,6 @@
 export type InvoiceStatus = 'draft' | 'sent' | 'viewed' | 'paid' | 'overdue'
-export type InvoiceType   = 'invoice' | 'quote'
-export type UserRole      = 'owner' | 'admin' | 'member'
+export type InvoiceType = 'invoice' | 'quote'
+export type UserRole = 'owner' | 'admin' | 'member'
 
 export interface Tenant {
   id: string

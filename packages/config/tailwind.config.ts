@@ -6,7 +6,7 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          50:  '#E1F5EE',
+          50: '#E1F5EE',
           100: '#9FE1CB',
           400: '#25A572',
           600: '#1A6B4A',
@@ -14,7 +14,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Montserrat', 'system-ui', 'sans-serif'],
+        logo: ['Abres', 'system-ui', 'sans-serif'],
       },
     },
   },

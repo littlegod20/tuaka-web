@@ -1,6 +1,6 @@
 # TuaKa — Invoice & Quote Management for African Businesses
 
-> **Tua Ka** (Akan: *pay up*) — A multi-tenant SaaS platform that helps small businesses across West Africa create professional invoices, send quotes, and collect payments via mobile money and card.
+> **Tua Ka** (Akan: _pay up_) — A multi-tenant SaaS platform that helps small businesses across West Africa create professional invoices, send quotes, and collect payments via mobile money and card.
 
 ---
 
@@ -25,11 +25,11 @@ TuaKa is a full-stack SaaS invoicing platform built for small businesses in Ghan
 
 The platform has three distinct user types:
 
-| Actor | Description | Access |
-|-------|-------------|--------|
-| Platform owner | You — manages all tenants, plans, and revenue | `admin.tuaka.app` |
-| Business owner | Pays for a subscription, creates invoices | `{slug}.tuaka.app` |
-| Client | Receives and pays invoices | Public link — no login |
+| Actor          | Description                                   | Access                 |
+| -------------- | --------------------------------------------- | ---------------------- |
+| Platform owner | You — manages all tenants, plans, and revenue | `admin.tuaka.app`      |
+| Business owner | Pays for a subscription, creates invoices     | `{slug}.tuaka.app`     |
+| Client         | Receives and pays invoices                    | Public link — no login |
 
 This repository contains the **frontend monorepo** only. The Laravel API lives in a separate repo (`tuaka-api`).
 
@@ -55,16 +55,16 @@ tuaka-web/
 
 ## Tech stack
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | React 18 + TypeScript |
-| Build tool | Vite 5 |
-| Monorepo | Turborepo + pnpm workspaces |
-| Routing | React Router v6 |
-| Data fetching | TanStack Query v5 |
-| HTTP client | Axios |
-| Styling | Tailwind CSS v3 |
-| Package manager | pnpm |
+| Layer           | Technology                  |
+| --------------- | --------------------------- |
+| Framework       | React 18 + TypeScript       |
+| Build tool      | Vite 5                      |
+| Monorepo        | Turborepo + pnpm workspaces |
+| Routing         | React Router v6             |
+| Data fetching   | TanStack Query v5           |
+| HTTP client     | Axios                       |
+| Styling         | Tailwind CSS v3             |
+| Package manager | pnpm                        |
 
 ---
 
@@ -116,9 +116,9 @@ pnpm lint
 
 Once running, the apps are available at:
 
-| App | URL |
-|-----|-----|
-| Admin portal | http://localhost:3000 |
+| App             | URL                   |
+| --------------- | --------------------- |
+| Admin portal    | http://localhost:3000 |
 | Business portal | http://localhost:3001 |
 
 To run a single app in isolation:
@@ -137,11 +137,13 @@ Each app has its own `.env.local` file which is **never committed to git**.
 Create these files before running the apps locally:
 
 **`apps/portal/.env.local`**
+
 ```env
 VITE_API_URL=http://localhost:8000
 ```
 
 **`apps/admin/.env.local`**
+
 ```env
 VITE_API_URL=http://localhost:8000
 ```
@@ -156,25 +158,25 @@ For production, these are set as environment variables in your deployment pipeli
 
 The customer-facing app used by business owners to manage their invoicing workspace. Each tenant accesses this at their own subdomain (e.g. `acme.tuaka.app`).
 
-| Page | Route | Description |
-|------|-------|-------------|
+| Page      | Route        | Description                                             |
+| --------- | ------------ | ------------------------------------------------------- |
 | Dashboard | `/dashboard` | Revenue overview, outstanding invoices, recent activity |
-| Invoices | `/invoices` | Create, send, and track invoices |
-| Quotes | `/quotes` | Create and convert quotes to invoices |
-| Clients | `/clients` | Manage client contact list |
-| Products | `/products` | Saved services and default prices |
-| Settings | `/settings` | Business profile, branding, reminder rules |
+| Invoices  | `/invoices`  | Create, send, and track invoices                        |
+| Quotes    | `/quotes`    | Create and convert quotes to invoices                   |
+| Clients   | `/clients`   | Manage client contact list                              |
+| Products  | `/products`  | Saved services and default prices                       |
+| Settings  | `/settings`  | Business profile, branding, reminder rules              |
 
 ### `apps/admin` — Admin portal
 
 The internal platform management tool used by the platform owner. Lives at `admin.tuaka.app`. Never accessible to tenants.
 
-| Page | Route | Description |
-|------|-------|-------------|
+| Page      | Route        | Description                                         |
+| --------- | ------------ | --------------------------------------------------- |
 | Dashboard | `/dashboard` | MRR, active tenants, churn, platform invoice volume |
-| Tenants | `/tenants` | View and manage all businesses on the platform |
-| Plans | `/plans` | Create and edit subscription plans |
-| Payments | `/payments` | Subscription payment history across all tenants |
+| Tenants   | `/tenants`   | View and manage all businesses on the platform      |
+| Plans     | `/plans`     | Create and edit subscription plans                  |
+| Payments  | `/payments`  | Subscription payment history across all tenants     |
 
 ---
 
@@ -185,7 +187,7 @@ The internal platform management tool used by the platform owner. Lives at `admi
 Shared React component library used by both apps. Contains only presentational components with no business logic.
 
 ```typescript
-import { Button, Card, Badge, Input } from '@tuaka/ui'
+import { Badge, Button, Card, Input } from '@tuaka/ui'
 ```
 
 Current components: `Button`, `Card`, `Badge`, `Input`
@@ -195,10 +197,11 @@ Current components: `Button`, `Card`, `Badge`, `Input`
 Shared Axios client and TanStack Query hooks. Handles JWT token injection and `X-Tenant` header automatically on every request.
 
 ```typescript
-import { useInvoices, useSendInvoice, useLogin } from '@tuaka/api-client'
+import { useInvoices, useLogin, useSendInvoice } from '@tuaka/api-client'
 ```
 
 The `X-Tenant` header is derived from the subdomain at request time:
+
 - `acme.tuaka.app` → `X-Tenant: acme`
 - `localhost` → `X-Tenant: local` (handled by `DEV_TENANT` in the API `.env`)
 
@@ -256,29 +259,34 @@ git push origin feature/invoice-creation
 ## Roadmap
 
 ### Phase 1 — Auth and tenant setup
+
 - [ ] Business registration and login
 - [ ] JWT auth with tenant resolution via subdomain
 - [ ] Team member invites and role management
 
 ### Phase 2 — Core invoicing
+
 - [ ] Invoice creation with line items
 - [ ] Quote creation and quote-to-invoice conversion
 - [ ] PDF generation and email delivery via Mailgun
 - [ ] Public invoice view page with view tracking
 
 ### Phase 3 — Payments
+
 - [ ] MTN MoMo payment integration on public invoice page
 - [ ] Paystack card payment integration
 - [ ] Webhook handling with idempotency
 - [ ] Automated payment reminders
 
 ### Phase 4 — Billing and subscriptions
+
 - [ ] Subscription plans and Paystack recurring billing
 - [ ] Free tier invoice limits
 - [ ] Grace period handling on failed payments
 - [ ] Admin billing dashboard
 
 ### Phase 5 — Infrastructure
+
 - [ ] Ubuntu 22.04 server provisioning
 - [ ] Nginx wildcard subdomain config with SSL
 - [ ] GitHub Actions CI/CD pipeline (staging + production)
@@ -288,10 +296,10 @@ git push origin feature/invoice-creation
 
 ## Related repositories
 
-| Repository | Description |
-|-----------|-------------|
+| Repository  | Description                                           |
+| ----------- | ----------------------------------------------------- |
 | `tuaka-api` | Laravel 11 REST API — auth, invoices, billing, queues |
 
 ---
 
-*Built with focus for the West African market. Your work deserves to be paid for.*
+_Built with focus for the West African market. Your work deserves to be paid for._

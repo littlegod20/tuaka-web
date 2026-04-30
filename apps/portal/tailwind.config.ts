@@ -1,13 +1,10 @@
 import type { Config } from 'tailwindcss'
+
 import baseConfig from '@tuaka/config/tailwind.config'
 
 const config: Config = {
   ...baseConfig,
-  content: [
-    './index.html',
-    './src/**/*.{ts,tsx}',
-    '../../packages/ui/src/**/*.{ts,tsx}',
-  ],
+  content: ['./index.html', './src/**/*.{ts,tsx}', '../../packages/ui/src/**/*.{ts,tsx}'],
 }
 
 export default config
