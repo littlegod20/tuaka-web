@@ -110,6 +110,7 @@ export function RegisterPage() {
               required
               label="Password"
               name="password"
+              passwordToggle
               type="password"
               placeholder="Min. 8 characters"
               value={values.password}
@@ -120,6 +121,7 @@ export function RegisterPage() {
               required
               label="Confirm password"
               name="password_confirmation"
+              passwordToggle
               type="password"
               placeholder="••••••••"
               value={values.password_confirmation}

@@ -13,9 +13,8 @@ apiClient.interceptors.request.use((config) => {
 
   // extract subdomain: acme.tuaka.app → 'acme'
   // locally: localhost → 'local' (handled by Laravel .env DEV_TENANT)
-  const hostname = window.location.hostname
-  const subdomain = hostname.includes('.') ? hostname.split('.')[0] : 'local'
-
+  const hostname = window.location.hostname;
+  const subdomain = hostname.includes('.') ? hostname.split('.')[0] : import.meta.env.VITE_DEV_TENANT ?? 'local'
   config.headers['X-Tenant'] = subdomain
   return config
 })

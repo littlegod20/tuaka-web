@@ -81,3 +81,52 @@ export function useLogout() {
     },
   })
 }
+
+// ─── Forgot Password ──────────────────────────────────────────────────────
+
+export function useForgotPassword() {
+  return useMutation<{ message: string }, Error, { email: string }>({
+    mutationFn: (data) =>
+      apiClient.post('/api/v1/forgot-password', data).then((r) => r.data),
+  })
+}
+
+// ─── Reset Password ───────────────────────────────────────────────────────
+
+interface ResetPasswordPayload {
+  email: string
+  token: string
+  password: string
+  password_confirmation: string
+}
+
+export function useResetPassword() {
+  return useMutation<{ message: string }, Error, ResetPasswordPayload>({
+    mutationFn: (data) =>
+      apiClient.post('/api/v1/reset-password', data).then((r) => r.data),
+  })
+}
+
+// ─── Verify Email ─────────────────────────────────────────────────────────
+
+export function useVerifyEmail() {
+  const queryClient = useQueryClient()
+  return useMutation<{ message: string }, Error, { token: string; email: string }>({
+    mutationFn: (data) =>
+      apiClient
+        .get('/api/v1/verify-email', { params: data })
+        .then((r) => r.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['me'] })
+    },
+  })
+}
+
+// ─── Resend Verification ──────────────────────────────────────────────────
+
+export function useResendVerification() {
+  return useMutation<{ message: string }, Error, void>({
+    mutationFn: () =>
+      apiClient.post('/api/v1/email/resend').then((r) => r.data),
+  })
+}

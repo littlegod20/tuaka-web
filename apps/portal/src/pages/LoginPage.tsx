@@ -56,15 +56,26 @@ export function LoginPage() {
               value={values.email}
               onChange={handleChange}
             />
-            <Input
-              required
-              label="Password"
-              name="password"
-              type="password"
-              placeholder="••••••••"
-              value={values.password}
-              onChange={handleChange}
-            />
+            <div className="flex flex-col gap-1">
+              <Input
+                required
+                label="Password"
+                name="password"
+                passwordToggle
+                type="password"
+                placeholder="••••••••"
+                value={values.password}
+                onChange={handleChange}
+              />
+              <div className="flex justify-end">
+                <Link
+                  className="text-sm text-brand-500 hover:underline font-medium"
+                  to="/forgot-password"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+            </div>
 
             {apiError && (
               <p className="text-sm text-red-500 text-center">{apiError}</p>

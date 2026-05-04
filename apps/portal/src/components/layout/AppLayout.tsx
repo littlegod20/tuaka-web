@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom'
 
-import { useLogout } from '@tuaka/api-client'
+import { useLogout, useMe, useResendVerification } from '@tuaka/api-client'
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard' },
@@ -11,6 +11,10 @@ const navItems = [
 
 export function AppLayout() {
   const { mutate: logout } = useLogout()
+  const { data: me } = useMe()
+  const { mutate: resend, isPending: resending, isSuccess: resent } = useResendVerification()
+
+  const isUnverified = me?.user && !me.user.email_verified_at
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -46,9 +50,28 @@ export function AppLayout() {
           </button>
         </div>
       </aside>
+
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Verification banner */}
+        {isUnverified && (
+          <div className="bg-amber-50 border-b border-amber-100 px-6 py-2.5 flex items-center justify-between gap-4">
+            <p className="text-sm text-amber-800">
+              Please verify your email to enable invoice sending.
+            </p>
+            <button
+              className="text-sm font-medium text-amber-700 hover:text-amber-900 underline underline-offset-2 disabled:opacity-50 shrink-0"
+              disabled={resending || resent}
+              onClick={() => resend()}
+            >
+              {resent ? 'Email sent ✓' : resending ? 'Sending…' : 'Resend email'}
+            </button>
+          </div>
+        )}
+
       <main className="flex-1 overflow-auto p-6">
         <Outlet />
       </main>
+    </div>
     </div>
   )
 }

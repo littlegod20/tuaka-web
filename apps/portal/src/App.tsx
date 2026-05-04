@@ -6,10 +6,9 @@ import { ClientsPage } from '@/pages/clients/ClientsPage'
 import { DashboardPage } from '@/pages/dashboard/DashboardPage'
 import { InvoicesPage } from '@/pages/invoices/InvoicesPage'
 import { RegisterPage } from './pages/RegisterPage'
-
-function isAuthenticated() {
-  return !!localStorage.getItem('tuaka_token')
-}
+import { VerifyEmailPage } from './pages/VerifyEmailPage'
+import { ResetPasswordPage } from './pages/ResetPasswordPage'
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const {data: me, isLoading} = useMe()
@@ -31,6 +30,9 @@ export default function App() {
     <Routes>
       <Route element={<LoginPage />} path="/login" />
       <Route element={<RegisterPage />} path="/register" />
+      <Route element={<ForgotPasswordPage />} path="/forgot-password" />
+      <Route element={<ResetPasswordPage />} path="/reset-password" />
+      <Route element={<VerifyEmailPage />} path="/verify-email" />
       <Route
         element={
           <ProtectedRoute>
