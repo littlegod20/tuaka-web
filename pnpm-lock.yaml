@@ -21,6 +21,9 @@ importers:
       '@tuaka/ui':
         specifier: workspace:*
         version: link:packages/ui
+      '@tuaka/utils':
+        specifier: workspace:*
+        version: link:packages/utils
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -106,6 +109,9 @@ importers:
       '@tuaka/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@tuaka/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -146,6 +152,9 @@ importers:
 
   apps/portal:
     dependencies:
+      '@tuaka/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -236,6 +245,22 @@ importers:
       '@types/react-dom':
         specifier: 18.3.7
         version: 18.3.7(@types/react@18.3.28)
+      typescript:
+        specifier: ^5.3.3
+        version: 5.9.3
+
+  packages/utils:
+    dependencies:
+      react:
+        specifier: ^18.2.0
+        version: 18.3.1
+    devDependencies:
+      '@tuaka/config':
+        specifier: workspace:*
+        version: link:../config
+      '@types/react':
+        specifier: 18.3.28
+        version: 18.3.28
       typescript:
         specifier: ^5.3.3
         version: 5.9.3

@@ -23,9 +23,11 @@ export interface User {
 export interface Client {
   id: string
   name: string
-  email: string
+  email: string | null
   phone: string | null
   address: string | null
+  company: string | null
+  created_at: string
 }
 
 export interface Invoice {
