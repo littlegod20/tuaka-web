@@ -13,6 +13,7 @@ import { ProductsPage } from './pages/products/ProductsPage'
 import { InvoiceBuilderPage } from './pages/invoices/InvoiceBuilderPage'
 import { SettingsPage } from './pages/settings/SettingsPage'
 import { InvoiceDetailPage } from './pages/invoices/InvoiceDetailsPage'
+import { PublicInvoicePage } from './pages/public/PublicInvoicePage'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const {data: me, isLoading} = useMe()
@@ -37,6 +38,7 @@ export default function App() {
       <Route element={<ForgotPasswordPage />} path="/forgot-password" />
       <Route element={<ResetPasswordPage />} path="/reset-password" />
       <Route element={<VerifyEmailPage />} path="/verify-email" />
+      <Route element={<PublicInvoicePage />} path="/inv/:token" />
       <Route
         element={
           <ProtectedRoute>

@@ -123,3 +123,29 @@ export function useConvertQuote() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['invoices'] }),
   })
 }
+
+
+// ─── Public view (token-based, no auth) ──────────────────────────────────
+
+export interface PublicInvoice extends Invoice {
+  tenant: {
+    id: string
+    name: string
+    slug: string
+    currency: string
+    invoice_prefix: string
+    address: string | null
+    phone: string | null
+    website: string | null
+  }
+}
+
+export function usePublicInvoice(token: string) {
+  return useQuery<PublicInvoice>({
+    queryKey: ['public-invoice', token],
+    queryFn: () =>
+      apiClient.get(`api/inv/${token}`).then((r) => r.data),
+    enabled: !!token,
+    retry: false,
+  })
+}
