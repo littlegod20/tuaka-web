@@ -63,3 +63,11 @@ export interface PaginatedResponse<T> {
     total: number
   }
 }
+
+export interface Product {
+  id: string
+  name: string
+  description: string | null
+  default_price: number // in pesewas
+  created_at: string
+}

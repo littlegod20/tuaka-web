@@ -9,6 +9,7 @@ import { RegisterPage } from './pages/RegisterPage'
 import { VerifyEmailPage } from './pages/VerifyEmailPage'
 import { ResetPasswordPage } from './pages/ResetPasswordPage'
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage'
+import { ProductsPage } from './pages/products/ProductsPage'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const {data: me, isLoading} = useMe()
@@ -45,6 +46,7 @@ export default function App() {
         <Route element={<DashboardPage />} path="dashboard" />
         <Route element={<InvoicesPage />} path="invoices" />
         <Route element={<ClientsPage />} path="clients" />
+        <Route element={<ProductsPage />} path="products" />
       </Route>
     </Routes>
   )

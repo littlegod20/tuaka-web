@@ -70,6 +70,28 @@ function IconClients({ className }: { className?: string }) {
   )
 }
 
+function IconProducts({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      viewBox="0 0 24 24"
+    >
+      <rect x="3" y="7" width="18" height="13" rx="2" />
+      <path d="M16 3v4" />
+      <path d="M8 3v4" />
+      <path d="M3 11h18" />
+      <circle cx="8.5" cy="15.5" r="1.5" />
+      <circle cx="15.5" cy="15.5" r="1.5" />
+    </svg>
+  )
+}
+
 function IconSettings({ className }: { className?: string }) {
   return (
     <svg
@@ -130,6 +152,7 @@ const navItems = [
   { to: '/dashboard', label: 'Dashboard', Icon: IconDashboard },
   { to: '/invoices', label: 'Invoices', Icon: IconInvoices },
   { to: '/clients', label: 'Clients', Icon: IconClients },
+  { to: '/products', label: 'Products', Icon: IconProducts },
   { to: '/settings', label: 'Settings', Icon: IconSettings },
 ] as const
 
