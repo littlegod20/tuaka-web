@@ -149,3 +149,35 @@ export function usePublicInvoice(token: string) {
     retry: false,
   })
 }
+
+// ─── Download PDF ─────────────────────────────────────────────────────────
+
+export async function downloadInvoicePdf(id: string): Promise<void> {
+  const response = await apiClient.get(`/api/v1/invoices/${id}/download`, {
+    responseType: 'blob',
+  })
+
+  const url = window.URL.createObjectURL(new Blob([response.data]))
+  const link = document.createElement('a')
+  link.href = url
+  link.setAttribute('download', `invoice-${id}.pdf`)
+  document.body.appendChild(link)
+  link.click()
+  link.remove()
+  window.URL.revokeObjectURL(url)
+}
+
+export async function downloadPublicInvoicePdf(token: string): Promise<void> {
+  const response = await apiClient.get(`/api/inv/${token}/download`, {
+    responseType: 'blob',
+  })
+
+  const url = window.URL.createObjectURL(new Blob([response.data]))
+  const link = document.createElement('a')
+  link.href = url
+  link.setAttribute('download', `invoice.pdf`)
+  document.body.appendChild(link)
+  link.click()
+  link.remove()
+  window.URL.revokeObjectURL(url)
+}

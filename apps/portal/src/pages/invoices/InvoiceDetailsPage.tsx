@@ -10,6 +10,7 @@ import {
 import { formatGHS } from '@tuaka/utils'
 import { Button } from '@tuaka/ui'
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog'
+import { downloadInvoicePdf } from '@tuaka/api-client'
 
 const STATUS_STYLES: Record<string, string> = {
   draft:   'bg-gray-100 text-gray-600',
@@ -42,6 +43,8 @@ export function InvoiceDetailPage() {
   const [confirmPaid, setConfirmPaid] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [confirmConvert, setConfirmConvert] = useState(false)
+
+  const [downloading, setDownloading] = useState(false)
 
   if (isLoading) {
     return (
@@ -108,6 +111,19 @@ export function InvoiceDetailPage() {
               Edit
             </Button>
           )}
+
+        <Button
+          variant="secondary"
+          loading={downloading}
+          onClick={async () => {
+            setDownloading(true)
+            await downloadInvoicePdf(invoice.id)
+            setDownloading(false)
+          }}
+        >
+          ↓ Download PDF
+        </Button>
+
           {canConvert && (
             <Button
               variant="secondary"

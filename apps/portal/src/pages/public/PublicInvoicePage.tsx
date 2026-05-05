@@ -2,18 +2,20 @@ import { useParams } from 'react-router-dom'
 import { usePublicInvoice } from '@tuaka/api-client'
 import { formatGHS } from '@tuaka/utils'
 import { useState } from 'react'
-import { PaymentModal } from './PaymentModal'   
+import { PaymentModal } from './PaymentModal'  
+import { downloadPublicInvoicePdf } from '@tuaka/api-client' 
 
 export function PublicInvoicePage() {
   const { token } = useParams()
   const { data: invoice, isLoading, isError } = usePublicInvoice(token ?? '')
   const [showPayment, setShowPayment] = useState(false)
   const [paid, setPaid] = useState(false)
+  const [downloading, setDownloading] = useState(false)
 
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="w-6 h-6 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-brand-400 border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -221,6 +223,24 @@ export function PublicInvoicePage() {
                         onClick={() => setShowPayment(true)}
                     >
                         Pay {formatGHS(invoice.total)} with Mobile Money
+                    </button>
+                    <button
+                        disabled={downloading}
+                        className="w-full max-w-sm border border-gray-200 text-gray-600 hover:bg-gray-50 disabled:opacity-50 font-medium py-3 px-6 rounded-xl transition-colors text-sm flex items-center justify-center gap-2"
+                        onClick={async () => {
+                            setDownloading(true)
+                            await downloadPublicInvoicePdf(token ?? '')
+                            setDownloading(false)
+                        }}
+                        >
+                        {downloading ? (
+                            <>
+                            <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+                            Generating PDF…
+                            </>
+                        ) : (
+                            <>↓ Download PDF</>
+                        )}
                     </button>
                     <p className="text-xs text-gray-400">
                         Supports MTN MoMo, Vodafone Cash, AirtelTigo Money
