@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import { notifyGlobalApiError } from './errors'
+
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL ?? 'http://localhost:8000',
   headers: { 'Content-Type': 'application/json' },
@@ -25,6 +27,7 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem('tuaka_token')
     }
+    notifyGlobalApiError(error)
     return Promise.reject(error)
   },
 )

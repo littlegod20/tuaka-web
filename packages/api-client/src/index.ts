@@ -1,6 +1,8 @@
 export { default as apiClient } from './client'
+export { getApiErrorMessage, registerApiErrorNotifier } from './errors'
 export * from './types'
 export * from './auth'
 export * from './invoices'
 export * from './clients'
 export * from './products'
+export * from './tenant'
