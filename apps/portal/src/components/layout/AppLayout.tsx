@@ -272,7 +272,7 @@ export function AppLayout() {
           </div>
         )}
 
-        <main className="flex-1 overflow-auto p-6">
+        <main className="flex min-h-0 flex-1 flex-col overflow-hidden p-6">
           <Outlet />
         </main>
       </div>

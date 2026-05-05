@@ -40,6 +40,14 @@ export type DataTableProps<T extends { id: string }> = {
   /** Defaults to `row.id` */
   getRowId?: (row: T) => string
 
+  /** Merged onto the root card */
+  className?: string
+  /**
+   * Tailwind classes for max-height on the scrollable table wrapper (defaults to a viewport-based cap).
+   * The table area grows with content up to this max, then scrolls.
+   */
+  tableMaxHeightClassName?: string
+
   isLoading?: boolean
   emptyContent?: ReactNode
 
@@ -62,6 +70,8 @@ export function DataTable<T extends { id: string }>({
   columns,
   rows,
   getRowId = (row) => row.id,
+  className,
+  tableMaxHeightClassName = 'max-h-[calc(100dvh-14rem)]',
   isLoading,
   emptyContent,
   pagination,
@@ -120,9 +130,11 @@ export function DataTable<T extends { id: string }>({
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border border-gray-100 bg-white">
+    <div
+      className={`flex w-full flex-col overflow-hidden rounded-xl border border-gray-100 bg-white ${className ?? ''}`}
+    >
       {showBulkBar && (
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-brand-100 bg-brand-50/80 px-4 py-3">
+        <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-brand-100 bg-brand-50/80 px-4 py-3">
           <p className="text-sm font-medium text-brand-900">
             {selectedCount} selected
           </p>
@@ -166,12 +178,14 @@ export function DataTable<T extends { id: string }>({
       ) : rows.length === 0 ? (
         <div className="py-16 text-center">{emptyContent}</div>
       ) : (
-        <div className="overflow-x-auto">
+        <div
+          className={`overflow-x-auto overflow-y-auto overscroll-contain ${tableMaxHeightClassName}`}
+        >
           <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-gray-100 text-left">
+            <thead className="text-left">
+              <tr>
                 {selection && (
-                  <th className="w-10 px-3 py-3">
+                  <th className="sticky top-0 z-[1] w-10 border-b border-gray-100 bg-white px-3 py-3">
                     <input
                       ref={headerCheckboxRef}
                       aria-label="Select all on this page"
@@ -185,14 +199,14 @@ export function DataTable<T extends { id: string }>({
                 {columns.map((col) => (
                   <th
                     key={col.id}
-                    className={`px-4 py-3 font-medium text-gray-500 ${col.headerClassName ?? ''}`}
+                    className={`sticky top-0 z-[1] border-b border-gray-100 bg-white px-4 py-3 font-medium text-gray-500 ${col.headerClassName ?? ''}`}
                   >
                     {col.header}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-gray-50 bg-white">
               {rows.map((row) => {
                 const id = getRowId(row)
                 const checked = selectedIds.includes(id)
@@ -229,7 +243,7 @@ export function DataTable<T extends { id: string }>({
       )}
 
       {pagination && !isLoading && rows.length > 0 && (
-        <div className="flex flex-wrap items-center gap-3 border-t border-gray-100 px-4 py-3 text-sm">
+        <div className="flex shrink-0 flex-wrap items-center gap-3 border-t border-gray-100 px-4 py-3 text-sm">
           <p className="min-w-0 flex-1 text-gray-600">
             Showing{' '}
             <span className="font-medium text-gray-900">

@@ -130,9 +130,9 @@ export function ClientsPage() {
   }
 
   return (
-    <div>
+    <div className="flex min-h-0 flex-1 flex-col">
       {/* Header */}
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex shrink-0 items-center justify-between">
         <div>
           <h1 className="text-xl font-semibold text-gray-900">Clients</h1>
         </div>
@@ -142,7 +142,7 @@ export function ClientsPage() {
       </div>
 
       {/* Search */}
-      <div className="mb-4">
+      <div className="mb-4 shrink-0">
         <input
           className="w-full max-w-sm rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20"
           placeholder="Search clients…"
