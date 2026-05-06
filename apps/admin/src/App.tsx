@@ -5,6 +5,7 @@ import { LoginPage } from '@/pages/LoginPage'
 import { DashboardPage } from '@/pages/dashboard/DashboardPage'
 import { PlansPage } from '@/pages/plans/PlansPage'
 import { TenantsPage } from '@/pages/tenants/TenantsPage'
+import { TenantDetailPage } from './pages/tenants/TenantDetailPage'
 
 function isAuthenticated() {
   return !!localStorage.getItem('tuaka_admin_token')
@@ -31,6 +32,7 @@ export default function App() {
         <Route element={<DashboardPage />} path="dashboard" />
         <Route element={<TenantsPage />} path="tenants" />
         <Route element={<PlansPage />} path="plans" />
+        <Route element={<TenantDetailPage />} path="tenants/:id" />
       </Route>
     </Routes>
   )
