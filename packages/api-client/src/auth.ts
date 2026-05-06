@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import apiClient from './client'
-import type { Tenant, User } from './types'
+import type { SubscriptionInfo, Tenant, User } from './types'
 
 // ─── Login ────────────────────────────────────────────────────────────────
 
@@ -56,6 +56,12 @@ export function useRegister() {
 interface MeResponse {
   user: User
   tenant: Tenant
+  subscription: SubscriptionInfo | null
+  usage: {
+    invoices_this_month: number
+    invoice_limit: number
+    limit_reached: boolean
+  }
 }
 
 export function useMe() {

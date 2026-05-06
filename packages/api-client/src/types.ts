@@ -91,3 +91,23 @@ export interface Product {
   default_price: number // in pesewas
   created_at: string
 }
+
+export interface Plan {
+  id: string
+  name: string
+  slug: string
+  price_monthly: number
+  invoice_limit: number
+  features: string[]
+  is_active: boolean
+}
+
+export interface SubscriptionInfo {
+  status: string
+  is_trialing: boolean
+  is_active: boolean
+  trial_ends_at: string | null
+  period_ends_at: string | null
+  cancelled_at: string | null
+  plan: Plan | null
+}

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 
 import { useLogout, useMe, useResendVerification } from '@tuaka/api-client'
+import { ConfirmDialog } from '../ui/ConfirmDialog'
 
 const SIDEBAR_COLLAPSED_KEY = 'tuaka_portal_sidebar_collapsed'
 
@@ -148,13 +149,47 @@ function IconSidebar({ className }: { className?: string }) {
   )
 }
 
-const navItems = [
-  { to: '/dashboard', label: 'Dashboard', Icon: IconDashboard },
-  { to: '/invoices', label: 'Invoices', Icon: IconInvoices },
-  { to: '/clients', label: 'Clients', Icon: IconClients },
-  { to: '/products', label: 'Products', Icon: IconProducts },
-  { to: '/settings', label: 'Settings', Icon: IconSettings },
-] as const
+
+function IconBilling({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      viewBox="0 0 24 24"
+    >
+      <rect x="2" y="5" width="20" height="14" rx="2" />
+      <path d="M2 10h20" />
+      <circle cx="8" cy="16" r="1" />
+      <circle cx="12" cy="16" r="1" />
+      <circle cx="16" cy="16" r="1" />
+    </svg>
+  )
+}
+
+function IconTeam({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      viewBox="0 0 24 24"
+    >
+      <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+      <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+      <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+    </svg>
+  )
+}
+
 
 function CollapsedTooltip({
   children,
@@ -179,10 +214,12 @@ function CollapsedTooltip({
   )
 }
 
+
 export function AppLayout() {
-  const { mutate: logout } = useLogout()
+  const { mutate: logout, isPending: isLoggingOut } = useLogout()
   const { data: me } = useMe()
   const { mutate: resend, isPending: resending, isSuccess: resent } = useResendVerification()
+  const [showSignOutModal, setShowSignOutModal] = useState(false)
 
   const [collapsed, setCollapsed] = useState(() => {
     if (typeof window === 'undefined') return false
@@ -192,6 +229,36 @@ export function AppLayout() {
       return false
     }
   })
+
+  const myRole = me?.user.role ?? 'member'
+
+  const navItems = [
+    { to: '/dashboard', label: 'Dashboard', Icon: IconDashboard },
+    { to: '/invoices', label: 'Invoices', Icon: IconInvoices },
+    { to: '/clients', label: 'Clients', Icon: IconClients },
+    { to: '/products', label: 'Products', Icon: IconProducts },
+    { to: '/settings', label: 'Settings', Icon: IconSettings },
+    ...(myRole === 'owner' || myRole === 'admin'
+      ? [{ to: '/team', label: 'Team', Icon: IconTeam }]
+      : []),
+    ...(myRole === 'owner'
+      ? [{ to: '/billing', label: 'Billing', Icon: IconBilling }]
+      : []),
+  ] as const
+  
+
+  const navigate = useNavigate()
+
+  const trialEndsAt   = me?.subscription?.trial_ends_at
+  const isTrialing    = me?.subscription?.is_trialing
+  const daysLeft      = trialEndsAt
+    ? Math.ceil((new Date(trialEndsAt).getTime() - Date.now()) / 86400000)
+    : null
+  const showTrialWarn = isTrialing && daysLeft !== null && daysLeft <= 3
+
+  const usage        = me?.usage
+  const limitReached = usage?.limit_reached
+  const isFreeTier   = !me?.subscription || me?.subscription?.status === 'cancelled'
 
   useEffect(() => {
     try {
@@ -268,7 +335,7 @@ export function AppLayout() {
                 collapsed ? 'justify-center px-2 py-2.5' : 'gap-3 px-3 py-2 text-left',
               )}
               type="button"
-              onClick={() => logout()}
+              onClick={() => setShowSignOutModal(true)}
             >
               <IconSignOut className="h-5 w-5 shrink-0" />
               {!collapsed && <span>Sign out</span>}
@@ -294,11 +361,48 @@ export function AppLayout() {
             </button>
           </div>
         )}
+        {showTrialWarn && (
+          <div className="bg-blue-50 border-b border-blue-100 px-6 py-2.5 flex items-center justify-between gap-4">
+            <p className="text-sm text-blue-800">
+              Your free trial ends in <strong>{daysLeft} day{daysLeft === 1 ? '' : 's'}</strong>.
+            </p>
+            <button
+              className="text-sm font-medium text-blue-700 hover:text-blue-900 underline underline-offset-2 shrink-0"
+              onClick={() => navigate('/billing')}
+            >
+              Upgrade now
+            </button>
+          </div>
+        )}
+
+        {limitReached && isFreeTier && (
+          <div className="bg-red-50 border-b border-red-100 px-6 py-2.5 flex items-center justify-between gap-4">
+            <p className="text-sm text-red-800">
+              You've used all <strong>{usage?.invoice_limit}</strong> free invoices
+              this month.
+            </p>
+            <button
+              className="text-sm font-medium text-red-700 hover:text-red-900 underline underline-offset-2 shrink-0"
+              onClick={() => navigate('/billing')}
+            >
+              Upgrade to continue
+            </button>
+          </div>
+        )}
 
         <main className="flex min-h-0 flex-1 flex-col overflow-hidden p-6">
           <Outlet />
         </main>
       </div>
+      <ConfirmDialog
+        confirmLabel="Sign out"
+        loading={isLoggingOut}
+        message="You will be signed out of your account on this device."
+        open={showSignOutModal}
+        title="Sign out?"
+        onCancel={() => setShowSignOutModal(false)}
+        onConfirm={() => logout()}
+      />
     </div>
   )
 }

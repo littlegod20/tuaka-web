@@ -14,6 +14,10 @@ import { InvoiceBuilderPage } from './pages/invoices/InvoiceBuilderPage'
 import { SettingsPage } from './pages/settings/SettingsPage'
 import { InvoiceDetailPage } from './pages/invoices/InvoiceDetailsPage'
 import { PublicInvoicePage } from './pages/public/PublicInvoicePage'
+import { BillingCallbackPage } from './pages/billing/BillingCallbackPage'
+import { BillingPage } from './pages/billing/BillingPage'
+import { AcceptInvitePage } from './pages/invite/AcceptInvitePage'
+import { TeamPage } from './pages/team/TeamPage'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const {data: me, isLoading} = useMe()
@@ -39,6 +43,9 @@ export default function App() {
       <Route element={<ResetPasswordPage />} path="/reset-password" />
       <Route element={<VerifyEmailPage />} path="/verify-email" />
       <Route element={<PublicInvoicePage />} path="/inv/:token" />
+      <Route element={<BillingCallbackPage />} path="/billing/callback" />
+      <Route element={<AcceptInvitePage />} path="/invite/accept" />
+      
       <Route
         element={
           <ProtectedRoute>
@@ -56,6 +63,8 @@ export default function App() {
         <Route element={<InvoiceBuilderPage />} path="invoices/new" />
         <Route element={<InvoiceBuilderPage />} path="invoices/:id/edit" />
         <Route element={<InvoiceDetailPage />} path="invoices/:id" />
+        <Route element={<BillingPage />} path="billing" />
+        <Route element={<TeamPage />} path="team" />
       </Route>
     </Routes>
   )
