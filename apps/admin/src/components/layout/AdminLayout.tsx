@@ -233,8 +233,12 @@ export function AdminLayout() {
           </CollapsedTooltip>
         </div>
       </aside>
-      <main className="flex-1 overflow-auto p-6">
-        <Outlet />
+      <main className="flex min-h-0 flex-1 flex-col overflow-hidden p-6">
+        <div className="outlet-scroll-area min-h-0 flex-1 overflow-y-auto">
+          <div className="outlet-page-shell">
+            <Outlet />
+          </div>
+        </div>
       </main>
       <ConfirmDialog
         confirmLabel="Sign out"

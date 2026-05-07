@@ -20,13 +20,15 @@ const STATUS_STYLES: Record<string, string> = {
   overdue: 'bg-red-50 text-red-600',
 }
 
-const ACTIVITY_LABELS: Record<string, string> = {
-  created:   'Invoice created',
-  sent:      'Sent to client',
-  viewed:    'Viewed by client',
-  paid:      'Marked as paid',
-  converted: 'Converted from quote',
-  reminder:  'Reminder sent',
+const ACTIVITY_LABELS: Record<string, (meta: any) => string> = {
+  created:   () => 'Invoice created',
+  sent:      () => 'Sent to client',
+  viewed:    () => 'Viewed by client',
+  paid:      () => 'Marked as paid',
+  converted: () => 'Converted from quote',
+  reminder:  (meta) => meta?.days_until_due
+    ? `Reminder sent (${meta.days_until_due}d before due)`
+    : 'Reminder sent',
 }
 
 export function InvoiceDetailPage() {
@@ -296,7 +298,7 @@ export function InvoiceDetailPage() {
                   <li key={activity.id} className="ml-4">
                     <div className="absolute -left-1.5 mt-1 w-3 h-3 rounded-full bg-brand-100 border-2 border-brand-300" />
                     <p className="text-xs font-medium text-gray-700">
-                      {ACTIVITY_LABELS[activity.type] ?? activity.type}
+                    {(ACTIVITY_LABELS[activity.type] ?? (() => activity.type))(activity.meta)}
                     </p>
                     {activity.type === 'sent' &&
                         typeof activity.meta?.to === 'string' &&

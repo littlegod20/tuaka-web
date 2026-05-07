@@ -3,6 +3,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 
 import { useLogout, useMe, useResendVerification } from '@tuaka/api-client'
 import { ConfirmDialog } from '../ui/ConfirmDialog'
+import { CommandPalette } from '../ui/CommandPalette'
 
 const SIDEBAR_COLLAPSED_KEY = 'tuaka_portal_sidebar_collapsed'
 
@@ -220,6 +221,7 @@ export function AppLayout() {
   const { data: me } = useMe()
   const { mutate: resend, isPending: resending, isSuccess: resent } = useResendVerification()
   const [showSignOutModal, setShowSignOutModal] = useState(false)
+  const [paletteOpen, setPaletteOpen] = useState(false)
 
   const [collapsed, setCollapsed] = useState(() => {
     if (typeof window === 'undefined') return false
@@ -267,6 +269,18 @@ export function AppLayout() {
       /* ignore */
     }
   }, [collapsed])
+
+  // Ctrl+K / Cmd+K shortcut
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault()
+        setPaletteOpen(true)
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [])
 
   const isUnverified = me?.user && !me.user.email_verified_at
 
@@ -390,10 +404,34 @@ export function AppLayout() {
           </div>
         )}
 
-        <main className="flex min-h-0 flex-1 flex-col overflow-hidden p-6">
-          <Outlet />
+        <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
+          {/* Search button in sidebar */}
+          <div className="shrink-0 px-9 pb-2 pt-6 flex justify-end">
+            <button
+              className="w-fit flex items-center gap-2 px-3 py-2 text-sm text-gray-400 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors"
+              onClick={() => setPaletteOpen(true)}
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <span className="flex-1 text-left">Search</span>
+              <kbd className="text-xs bg-gray-100 px-1 rounded">⌘K</kbd>
+            </button>
+          </div>
+          <div className="outlet-scroll-area min-h-0 flex-1 overflow-y-auto px-6 pb-6">
+            <div className="outlet-page-shell">
+              <Outlet />
+            </div>
+          </div>
         </main>
       </div>
+
+      {/* Command palette */}
+      <CommandPalette
+        open={paletteOpen}
+        onClose={() => setPaletteOpen(false)}
+      />
+
       <ConfirmDialog
         confirmLabel="Sign out"
         loading={isLoggingOut}

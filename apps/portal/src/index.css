@@ -18,3 +18,17 @@
     @apply font-sans font-semibold;
   }
 }
+
+@layer components {
+  .outlet-page-shell {
+    @apply min-h-full;
+  }
+
+  .outlet-page-shell > * {
+    @apply flex min-h-full flex-col;
+  }
+
+  .outlet-page-shell > * > :first-child {
+    @apply sticky top-0 z-10 bg-gray-50;
+  }
+}

@@ -61,6 +61,13 @@ interface MeResponse {
     invoices_this_month: number
     invoice_limit: number
     limit_reached: boolean
+  },
+  onboarding: {
+    has_client: boolean
+    has_product: boolean
+    has_invoice: boolean
+    has_sent: boolean
+    complete: boolean
   }
 }
 

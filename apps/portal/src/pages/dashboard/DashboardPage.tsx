@@ -5,6 +5,7 @@ import {
   type DashboardRecentInvoice,
 } from '@tuaka/api-client'
 import { formatGHS } from '@tuaka/utils'
+import { OnboardingChecklist } from '@/components/ui/OnboardingChecklist'
 
 const STATUS_STYLES: Record<string, string> = {
   draft:   'bg-gray-100 text-gray-600',
@@ -63,6 +64,8 @@ export function DashboardPage() {
           </button>
         </div>
       </div>
+
+      <OnboardingChecklist />
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
