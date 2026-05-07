@@ -8,13 +8,14 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "axios": "^1.6.7",
-    "@tanstack/react-query": "^5.18.1"
+    "@sentry/react": "^10.52.0",
+    "@tanstack/react-query": "^5.18.1",
+    "axios": "^1.6.7"
   },
   "devDependencies": {
     "@tuaka/config": "workspace:*",
-    "typescript": "^5.3.3",
-    "@types/react": "^18.2.55"
+    "@types/react": "^18.2.55",
+    "typescript": "^5.3.3"
   },
   "peerDependencies": {
     "react": "^18.2.0"

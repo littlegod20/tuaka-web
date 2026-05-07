@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import apiClient from './client'
 import type { SubscriptionInfo, Tenant, User } from './types'
+import * as Sentry from '@sentry/react'
 
 // ─── Login ────────────────────────────────────────────────────────────────
 
@@ -21,9 +22,12 @@ export function useLogin() {
   return useMutation<AuthResponse, Error, LoginPayload>({
     mutationFn: (data) =>
       apiClient.post('/api/v1/login', data).then((r) => r.data),
-    onSuccess: ({ token }) => {
+    onSuccess: ({ token, user }) => {
       localStorage.setItem('tuaka_token', token)
       queryClient.invalidateQueries({ queryKey: ['me'] })
+
+      // Set Sentry user context
+      Sentry.setUser({ id: user.id, email: user.email })
     },
   })
 }
@@ -90,6 +94,7 @@ export function useLogout() {
     onSuccess: () => {
       localStorage.removeItem('tuaka_token')
       queryClient.clear()
+      Sentry.setUser(null)
       window.location.href = '/login'
     },
   })

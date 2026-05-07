@@ -18,6 +18,7 @@ import { BillingCallbackPage } from './pages/billing/BillingCallbackPage'
 import { BillingPage } from './pages/billing/BillingPage'
 import { AcceptInvitePage } from './pages/invite/AcceptInvitePage'
 import { TeamPage } from './pages/team/TeamPage'
+import * as Sentry from '@sentry/react'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const {data: me, isLoading} = useMe()
@@ -36,6 +37,27 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
+    <Sentry.ErrorBoundary
+      fallback={({ error, resetError }) => (
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+          <div className="text-center max-w-sm">
+            <div className="text-5xl mb-4">⚠️</div>
+            <h1 className="text-xl font-semibold text-gray-900 mb-2">
+              Something went wrong
+            </h1>
+            <p className="text-sm text-gray-500 mb-6">
+              We've been notified and are looking into it.
+            </p>
+            <button
+              className="px-4 py-2 bg-brand-400 text-white rounded-lg text-sm font-medium hover:bg-brand-600 transition-colors"
+              onClick={resetError}
+            >
+              Try again
+            </button>
+          </div>
+        </div>
+      )}
+    >
     <Routes>
       <Route element={<LoginPage />} path="/login" />
       <Route element={<RegisterPage />} path="/register" />
@@ -53,7 +75,7 @@ export default function App() {
           </ProtectedRoute>
         }
         path="/"
-      >
+        >
         <Route index element={<Navigate replace to="/dashboard" />} />
         <Route element={<DashboardPage />} path="dashboard" />
         <Route element={<InvoicesPage />} path="invoices" />
@@ -67,5 +89,6 @@ export default function App() {
         <Route element={<TeamPage />} path="team" />
       </Route>
     </Routes>
+    </Sentry.ErrorBoundary>
   )
 }
