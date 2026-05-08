@@ -5,6 +5,7 @@ import { Button, Input } from '@tuaka/ui'
 import { useForm } from '@/hooks/useForm'
 
 interface LoginForm {
+  slug: string
   email: string
   password: string
 }
@@ -13,7 +14,7 @@ export function LoginPage() {
   const navigate = useNavigate()
   const { data: me } = useMe()
   const { mutate: login, isPending, error } = useLogin()
-  const { values, handleChange } = useForm<LoginForm>({ email: '', password: '' })
+  const { values, handleChange } = useForm<LoginForm>({ slug: '', email: '', password: '' })
 
   
   // Already logged in → go to dashboard
@@ -23,9 +24,18 @@ export function LoginPage() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    login(values, {
-      onSuccess: () => navigate('/dashboard', { replace: true }),
-    })
+    // Store slug first so the interceptor picks it up
+    localStorage.setItem('tuaka_tenant_slug', values.slug)
+    login(
+      { email: values.email, password: values.password },
+      {
+        onSuccess: () => navigate('/dashboard', { replace: true }),
+        onError: () => {
+          // Clear slug on failure
+          localStorage.removeItem('tuaka_tenant_slug')
+        },
+      },
+    )
   }
 
   const apiError = error
@@ -46,6 +56,15 @@ export function LoginPage() {
         {/* Card */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+          <Input
+            required
+            label="Workspace URL"
+            name="slug"
+            placeholder="your-workspace-slug"
+            hint="The slug you used when registering"
+            value={values.slug}
+            onChange={handleChange}
+          />
             <Input
               required
               autoFocus
