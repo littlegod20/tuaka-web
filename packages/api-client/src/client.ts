@@ -16,9 +16,22 @@ apiClient.interceptors.request.use((config) => {
   // extract subdomain: acme.tuaka.app → 'acme'
   // locally: localhost → 'local' (handled by Laravel .env DEV_TENANT)
   const hostname = window.location.hostname;
-  const subdomain = hostname.includes('.') ? hostname.split('.')[0] : import.meta.env.VITE_DEV_TENANT ?? 'local'
-  config.headers['X-Tenant'] = subdomain
+  const isLocalDev = hostname === 'localhost' || hostname === '127.0.0.1'
+  
+  if (isLocalDev) {
+    // Local dev — use subdomain or 'local'
+    const subdomain = hostname.includes('.') ? hostname.split('.')[0] : 'local'
+    config.headers['X-Tenant'] = subdomain
+  } else {
+    // Production — use stored tenant slug from login
+    const tenantSlug = localStorage.getItem('tuaka_tenant_slug')
+    if (tenantSlug) {
+      config.headers['X-Tenant'] = tenantSlug
+    }
+  }
+
   return config
+
 })
 
 apiClient.interceptors.response.use(

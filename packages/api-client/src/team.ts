@@ -123,7 +123,7 @@ export function useInviteDetails(token: string) {
 
 export function useAcceptInvite(token: string) {
   return useMutation
-    <{ message: string; token: string },
+    <{ message: string; token: string; tenant: { slug: string } },
     Error,
     { name: string; password: string }
   >({
@@ -131,5 +131,9 @@ export function useAcceptInvite(token: string) {
       apiClient
         .post(`/api/v1/invite/${token}/accept`, data)
         .then((r) => r.data),
+        onSuccess: (data) => {
+          localStorage.setItem('tuaka_token', data.token)
+          localStorage.setItem('tuaka_tenant_slug', data.tenant.slug)
+        },
   })
 }

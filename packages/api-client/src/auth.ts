@@ -22,11 +22,10 @@ export function useLogin() {
   return useMutation<AuthResponse, Error, LoginPayload>({
     mutationFn: (data) =>
       apiClient.post('/api/v1/login', data).then((r) => r.data),
-    onSuccess: ({ token, user }) => {
+    onSuccess: ({ token, tenant, user }) => {
       localStorage.setItem('tuaka_token', token)
+      localStorage.setItem('tuaka_tenant_slug', tenant.slug) 
       queryClient.invalidateQueries({ queryKey: ['me'] })
-
-      // Set Sentry user context
       Sentry.setUser({ id: user.id, email: user.email })
     },
   })
@@ -48,8 +47,9 @@ export function useRegister() {
   return useMutation<AuthResponse, Error, RegisterPayload>({
     mutationFn: (data) =>
       apiClient.post('/api/v1/register', data).then((r) => r.data),
-    onSuccess: ({ token }) => {
+    onSuccess: ({ token, tenant }) => {
       localStorage.setItem('tuaka_token', token)
+      localStorage.setItem('tuaka_tenant_slug', tenant.slug) 
       queryClient.invalidateQueries({ queryKey: ['me'] })
     },
   })
@@ -93,6 +93,7 @@ export function useLogout() {
     mutationFn: () => apiClient.post('/api/v1/logout'),
     onSuccess: () => {
       localStorage.removeItem('tuaka_token')
+      localStorage.removeItem('tuaka_tenant_slug') 
       queryClient.clear()
       Sentry.setUser(null)
       window.location.href = '/login'
