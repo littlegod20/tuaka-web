@@ -79,8 +79,8 @@ export function InvoiceDetailPage() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-start justify-between mb-6">
-        <div>
+      <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div className="min-w-0">
           <button
             className="text-sm text-gray-400 hover:text-gray-600 mb-2 flex items-center gap-1 transition-colors"
             onClick={() => navigate('/invoices')}
@@ -104,7 +104,7 @@ export function InvoiceDetailPage() {
         </div>
 
         {/* Actions */}
-        <div className="flex gap-2 flex-wrap justify-end">
+        <div className="flex flex-wrap gap-2 lg:justify-end">
           {canEdit && (
             <Button
               variant="secondary"
@@ -157,14 +157,14 @@ export function InvoiceDetailPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 
         {/* Left — invoice body */}
-        <div className="col-span-2 space-y-4">
+        <div className="space-y-4 lg:col-span-2">
 
           {/* Client + dates */}
           <div className="bg-white rounded-xl border border-gray-100 p-6">
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div>
                 <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
                   Bill to
@@ -231,8 +231,9 @@ export function InvoiceDetailPage() {
           </div>
 
           {/* Line items */}
-          <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
-            <table className="w-full text-sm">
+          <div className="overflow-hidden rounded-xl border border-gray-100 bg-white">
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[520px] text-sm">
               <thead>
                 <tr className="border-b border-gray-100 text-left">
                   <th className="px-4 py-3 font-medium text-gray-500">Description</th>
@@ -252,10 +253,11 @@ export function InvoiceDetailPage() {
                 ))}
               </tbody>
             </table>
+            </div>
 
             {/* Totals */}
             <div className="border-t border-gray-100 px-4 py-4">
-              <div className="ml-auto w-64 space-y-2">
+              <div className="ml-auto w-full max-w-xs space-y-2 sm:w-64">
                 <div className="flex justify-between text-sm text-gray-600">
                   <span>Subtotal</span>
                   <span className="tabular-nums">{formatGHS(invoice.subtotal)}</span>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import { useLogout, useMe, useResendVerification } from '@tuaka/api-client'
 import { ConfirmDialog } from '../ui/ConfirmDialog'
@@ -191,6 +191,25 @@ function IconTeam({ className }: { className?: string }) {
   )
 }
 
+function IconMore({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      viewBox="0 0 24 24"
+    >
+      <circle cx="12" cy="12" r="1" />
+      <circle cx="19" cy="12" r="1" />
+      <circle cx="5" cy="12" r="1" />
+    </svg>
+  )
+}
+
 
 function CollapsedTooltip({
   children,
@@ -222,6 +241,8 @@ export function AppLayout() {
   const { mutate: resend, isPending: resending, isSuccess: resent } = useResendVerification()
   const [showSignOutModal, setShowSignOutModal] = useState(false)
   const [paletteOpen, setPaletteOpen] = useState(false)
+  const [moreMenuOpen, setMoreMenuOpen] = useState(false)
+  const location = useLocation()
 
   const [collapsed, setCollapsed] = useState(() => {
     if (typeof window === 'undefined') return false
@@ -247,7 +268,23 @@ export function AppLayout() {
       ? [{ to: '/billing', label: 'Billing', Icon: IconBilling }]
       : []),
   ] as const
-  
+
+  const primaryBottomNavItems = [
+    { to: '/dashboard', label: 'Dashboard', Icon: IconDashboard },
+    { to: '/invoices', label: 'Invoices', Icon: IconInvoices },
+    { to: '/clients', label: 'Clients', Icon: IconClients },
+    { to: '/products', label: 'Products', Icon: IconProducts },
+  ] as const
+
+  const moreNavLinks = [
+    { to: '/settings', label: 'Settings', Icon: IconSettings },
+    ...(myRole === 'owner' || myRole === 'admin'
+      ? [{ to: '/team', label: 'Team', Icon: IconTeam }]
+      : []),
+    ...(myRole === 'owner'
+      ? [{ to: '/billing', label: 'Billing', Icon: IconBilling }]
+      : []),
+  ] as const
 
   const navigate = useNavigate()
 
@@ -282,13 +319,32 @@ export function AppLayout() {
     return () => document.removeEventListener('keydown', onKey)
   }, [])
 
+  useEffect(() => {
+    setMoreMenuOpen(false)
+  }, [location.pathname])
+
+  useEffect(() => {
+    if (!moreMenuOpen) return
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') setMoreMenuOpen(false)
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [moreMenuOpen])
+
   const isUnverified = me?.user && !me.user.email_verified_at
+
+  const mobileNavLinkClass = ({ isActive }: { isActive: boolean }) =>
+    cn(
+      'flex min-h-[44px] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1 text-[0.65rem] font-medium leading-tight transition-colors',
+      isActive ? 'bg-brand-50 font-medium text-brand-600' : 'text-gray-600',
+    )
 
   return (
     <div className="flex h-screen bg-gray-50">
       <aside
         className={cn(
-          'flex flex-col border-r border-gray-100 bg-white transition-[width] duration-200 ease-out',
+          'hidden flex-col border-r border-gray-100 bg-white transition-[width] duration-200 ease-out lg:flex',
           collapsed ? 'w-[4.25rem]' : 'w-56',
         )}
       >
@@ -361,12 +417,12 @@ export function AppLayout() {
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Verification banner */}
         {isUnverified && (
-          <div className="flex items-center justify-between gap-4 border-b border-amber-100 bg-amber-50 px-6 py-2.5">
+          <div className="flex flex-col gap-2 border-b border-amber-100 bg-amber-50 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:px-6">
             <p className="text-sm text-amber-800">
               Please verify your email to enable invoice sending.
             </p>
             <button
-              className="shrink-0 text-sm font-medium text-amber-700 underline underline-offset-2 hover:text-amber-900 disabled:opacity-50"
+              className="shrink-0 self-start text-sm font-medium text-amber-700 underline underline-offset-2 hover:text-amber-900 disabled:opacity-50 sm:self-auto"
               disabled={resending || resent}
               type="button"
               onClick={() => resend()}
@@ -376,12 +432,12 @@ export function AppLayout() {
           </div>
         )}
         {showTrialWarn && (
-          <div className="bg-blue-50 border-b border-blue-100 px-6 py-2.5 flex items-center justify-between gap-4">
+          <div className="flex flex-col gap-2 border-b border-blue-100 bg-blue-50 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:px-6">
             <p className="text-sm text-blue-800">
               Your free trial ends in <strong>{daysLeft} day{daysLeft === 1 ? '' : 's'}</strong>.
             </p>
             <button
-              className="text-sm font-medium text-blue-700 hover:text-blue-900 underline underline-offset-2 shrink-0"
+              className="shrink-0 self-start text-sm font-medium text-blue-700 underline underline-offset-2 hover:text-blue-900 sm:self-auto"
               onClick={() => navigate('/billing')}
             >
               Upgrade now
@@ -390,13 +446,13 @@ export function AppLayout() {
         )}
 
         {limitReached && isFreeTier && (
-          <div className="bg-red-50 border-b border-red-100 px-6 py-2.5 flex items-center justify-between gap-4">
+          <div className="flex flex-col gap-2 border-b border-red-100 bg-red-50 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:px-6">
             <p className="text-sm text-red-800">
               You've used all <strong>{usage?.invoice_limit}</strong> free invoices
               this month.
             </p>
             <button
-              className="text-sm font-medium text-red-700 hover:text-red-900 underline underline-offset-2 shrink-0"
+              className="shrink-0 self-start text-sm font-medium text-red-700 underline underline-offset-2 hover:text-red-900 sm:self-auto"
               onClick={() => navigate('/billing')}
             >
               Upgrade to continue
@@ -404,26 +460,124 @@ export function AppLayout() {
           </div>
         )}
 
-        <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
-          {/* Search button in sidebar */}
-          <div className="shrink-0 px-9 pb-2 pt-6 flex justify-end">
+        <main className="relative flex min-h-0 flex-1 flex-col overflow-hidden">
+          <button
+            aria-label="Open search"
+            className="fixed bottom-[calc(6rem+env(safe-area-inset-bottom))] right-4 z-30 flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-md transition-colors hover:border-gray-300 hover:bg-gray-50 lg:hidden"
+            type="button"
+            onClick={() => setPaletteOpen(true)}
+          >
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
+
+          <div className="hidden shrink-0 justify-end px-9 pb-2 pt-6 lg:flex">
             <button
-              className="w-fit flex items-center gap-2 px-3 py-2 text-sm text-gray-400 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors"
+              className="flex w-fit items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-400 transition-colors hover:border-gray-300"
+              type="button"
               onClick={() => setPaletteOpen(true)}
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <span className="flex-1 text-left">Search</span>
-              <kbd className="text-xs bg-gray-100 px-1 rounded">⌘K</kbd>
+              <kbd className="rounded bg-gray-100 px-1 text-xs">⌘K</kbd>
             </button>
           </div>
-          <div className="outlet-scroll-area min-h-0 flex-1 overflow-y-auto px-6 pb-6">
+          <div className="outlet-scroll-area min-h-0 flex-1 overflow-y-auto px-4 pb-[max(6.5rem,env(safe-area-inset-bottom)+5.5rem)] pt-4 lg:px-6 lg:pb-6 lg:pt-0">
             <div className="outlet-page-shell">
               <Outlet />
             </div>
           </div>
         </main>
+      </div>
+
+      {/* Mobile bottom navigation */}
+      <div className="lg:hidden" data-mobile-nav-root>
+        {moreMenuOpen && (
+          <>
+            <button
+              aria-label="Close menu"
+              className="fixed inset-0 z-[45] bg-black/40"
+              type="button"
+              onClick={() => setMoreMenuOpen(false)}
+            />
+            <div
+              className="fixed left-3 right-3 z-50 max-h-[min(70vh,22rem)] overflow-y-auto rounded-xl border border-gray-200 bg-white p-2 shadow-xl"
+              style={{
+                bottom: 'max(5.75rem, calc(4.75rem + env(safe-area-inset-bottom, 0px)))',
+              }}
+            >
+              <p className="px-2 pb-2 text-xs font-medium uppercase tracking-wide text-gray-400">
+                More
+              </p>
+              <div className="space-y-1">
+                {moreNavLinks.map(({ to, label, Icon }) => (
+                  <NavLink
+                    key={to}
+                    className={({ isActive }) =>
+                      cn(
+                        'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors',
+                        isActive
+                          ? 'bg-brand-50 font-medium text-brand-600'
+                          : 'text-gray-700 hover:bg-gray-50',
+                      )
+                    }
+                    to={to}
+                    onClick={() => setMoreMenuOpen(false)}
+                  >
+                    <Icon className="h-5 w-5 shrink-0" />
+                    {label}
+                  </NavLink>
+                ))}
+                <button
+                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700"
+                  type="button"
+                  onClick={() => {
+                    setMoreMenuOpen(false)
+                    setShowSignOutModal(true)
+                  }}
+                >
+                  <IconSignOut className="h-5 w-5 shrink-0" />
+                  Sign out
+                </button>
+              </div>
+            </div>
+          </>
+        )}
+
+        <nav
+          className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none pb-[max(0.35rem,env(safe-area-inset-bottom))]"
+          aria-label="Primary"
+        >
+          <div className="pointer-events-auto mx-3 mb-3 flex h-[3.25rem] items-stretch justify-between gap-0.5 rounded-2xl border border-gray-200 bg-white/95 px-1 py-1 shadow-lg backdrop-blur-md supports-[backdrop-filter]:bg-white/90">
+            {primaryBottomNavItems.map(({ to, label, Icon }) => (
+              <NavLink
+                key={to}
+                aria-label={label}
+                className={mobileNavLinkClass}
+                to={to}
+              >
+                <Icon className="h-5 w-5 shrink-0" />
+                <span className="max-w-[4.25rem] truncate text-center">{label}</span>
+              </NavLink>
+            ))}
+            <button
+              aria-expanded={moreMenuOpen}
+              aria-label="More"
+              className={cn(
+                'flex min-h-[44px] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1 text-[0.65rem] font-medium leading-tight transition-colors',
+                moreMenuOpen ? 'text-brand-600' : 'text-gray-600',
+              )}
+              type="button"
+              onClick={() => setMoreMenuOpen((o) => !o)}
+            >
+              <IconMore className="h-5 w-5 shrink-0" />
+              <span className="max-w-[4.25rem] truncate text-center">More</span>
+            </button>
+          </div>
+        </nav>
       </div>
 
       {/* Command palette */}

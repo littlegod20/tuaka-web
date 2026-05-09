@@ -151,15 +151,15 @@ export function InvoicesPage() {
 
   return (
     <div>
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      {/* Header — stack title and actions on narrow viewports */}
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-semibold text-gray-900">Invoices</h1>
           <p className="text-sm text-gray-500 mt-0.5">
             {data?.meta.total ?? 0} total
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-shrink-0 flex-wrap gap-2">
           <Button variant="secondary" onClick={() => navigate('/invoices/new?type=quote')}>
             + New quote
           </Button>
@@ -169,22 +169,31 @@ export function InvoicesPage() {
         </div>
       </div>
 
-      {/* Status tabs */}
-      <div className="flex gap-1 mb-4 border-b border-gray-100">
-        {STATUS_TABS.map((tab) => (
-          <button
-            key={tab.value}
-            className={`px-3 py-2 text-sm font-medium border-b-2 transition-colors -mb-px ${
-              status === tab.value
-                ? 'border-brand-400 text-brand-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
-            onClick={() => { setStatus(tab.value); setPage(1) }}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+      {/* Status tabs — horizontal scroll keeps narrow layout compact */}
+      <nav
+        aria-label="Filter invoices by status"
+        className="mb-4 overflow-x-auto overscroll-x-contain border-b border-gray-100 touch-pan-x"
+      >
+        <div className="flex w-max gap-1">
+          {STATUS_TABS.map((tab) => (
+            <button
+              key={tab.value}
+              type="button"
+              className={`-mb-px shrink-0 whitespace-nowrap border-b-2 px-3 py-2 text-sm font-medium transition-colors ${
+                status === tab.value
+                  ? 'border-brand-400 text-brand-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'
+              }`}
+              onClick={() => {
+                setStatus(tab.value)
+                setPage(1)
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </nav>
 
       {/* Search */}
       <div className="mb-4">

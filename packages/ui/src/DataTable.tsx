@@ -71,7 +71,7 @@ export function DataTable<T extends { id: string }>({
   rows,
   getRowId = (row) => row.id,
   className,
-  tableMaxHeightClassName = 'max-h-[calc(100dvh-14rem)]',
+  tableMaxHeightClassName = 'max-h-[calc(100dvh-11rem)] lg:max-h-[calc(100dvh-14rem)]',
   isLoading,
   emptyContent,
   pagination,

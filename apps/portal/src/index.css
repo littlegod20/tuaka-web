@@ -29,6 +29,6 @@
   }
 
   .outlet-page-shell > * > :first-child {
-    @apply sticky top-0 z-10 bg-gray-50;
+    @apply bg-gray-50 lg:sticky lg:top-0 lg:z-10;
   }
 }

@@ -78,9 +78,9 @@ export function BillingPage() {
       </div>
 
       {/* Current plan banner */}
-      <div className="bg-white rounded-xl border border-gray-100 p-5 mb-6">
-        <div className="flex items-center justify-between">
-          <div>
+      <div className="mb-6 rounded-xl border border-gray-100 bg-white p-5">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0">
             <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
               Current plan
             </p>
@@ -116,6 +116,7 @@ export function BillingPage() {
           </div>
           {subscription?.is_active && !subscription?.cancelled_at && (
             <Button
+              className="self-start sm:self-auto"
               variant="secondary"
               size="sm"
               onClick={() => setConfirmCancel(true)}
@@ -127,7 +128,7 @@ export function BillingPage() {
       </div>
 
       {/* Plans grid */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {plans?.map((plan) => {
           const isCurrent  = plan.slug === currentPlanSlug
           const isPopular  = plan.slug === 'starter'

@@ -20,7 +20,7 @@ apiClient.interceptors.request.use((config) => {
   
   if (isLocalDev) {
     // Local dev — use subdomain or 'local'
-    const subdomain = hostname.includes('.') ? hostname.split('.')[0] : 'local'
+    const subdomain = hostname.includes('.') ? hostname.split('.')[0] :import.meta.env.VITE_DEV_TENANT ?? 'local'
     config.headers['X-Tenant'] = subdomain
   } else {
     // Production — use stored tenant slug from login

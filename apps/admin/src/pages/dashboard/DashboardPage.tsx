@@ -40,9 +40,9 @@ export function DashboardPage() {
         <StatCard label="Platform revenue" value={formatGHS(stats?.total_revenue ?? 0)} icon="💰" sub={`${stats?.paid_invoices ?? 0} paid invoices`} />
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
         {/* Signups chart */}
-        <div className="col-span-2 bg-white rounded-xl border border-gray-100 p-5">
+        <div className="bg-white rounded-xl border border-gray-100 p-5 xl:col-span-2">
           <h2 className="text-sm font-semibold text-gray-700 mb-4">
             New workspaces — last 6 months
           </h2>
@@ -118,41 +118,43 @@ export function DashboardPage() {
             View all
           </button>
         </div>
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-left border-b border-gray-50">
-              <th className="px-5 py-3 font-medium text-gray-400">Workspace</th>
-              <th className="px-5 py-3 font-medium text-gray-400">Plan</th>
-              <th className="px-5 py-3 font-medium text-gray-400">Status</th>
-              <th className="px-5 py-3 font-medium text-gray-400">Joined</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-50">
-            {data?.recent_tenants.map((tenant) => (
-              <tr
-                key={tenant.id}
-                className="hover:bg-gray-50 cursor-pointer transition-colors"
-                onClick={() => navigate(`/tenants/${tenant.id}`)}
-              >
-                <td className="px-5 py-3">
-                  <p className="font-medium text-gray-900">{tenant.name}</p>
-                  <p className="text-xs text-gray-400">{tenant.slug}</p>
-                </td>
-                <td className="px-5 py-3 text-gray-600">{tenant.plan}</td>
-                <td className="px-5 py-3">
-                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium capitalize ${SUB_STYLES[tenant.status] ?? ''}`}>
-                    {tenant.status}
-                  </span>
-                </td>
-                <td className="px-5 py-3 text-gray-500">
-                  {new Date(tenant.created_at).toLocaleDateString('en-GH', {
-                    day: 'numeric', month: 'short', year: 'numeric',
-                  })}
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[560px] text-sm">
+            <thead>
+              <tr className="text-left border-b border-gray-50">
+                <th className="px-5 py-3 font-medium text-gray-400">Workspace</th>
+                <th className="px-5 py-3 font-medium text-gray-400">Plan</th>
+                <th className="px-5 py-3 font-medium text-gray-400">Status</th>
+                <th className="px-5 py-3 font-medium text-gray-400">Joined</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {data?.recent_tenants.map((tenant) => (
+                <tr
+                  key={tenant.id}
+                  className="cursor-pointer transition-colors hover:bg-gray-50"
+                  onClick={() => navigate(`/tenants/${tenant.id}`)}
+                >
+                  <td className="px-5 py-3">
+                    <p className="font-medium text-gray-900">{tenant.name}</p>
+                    <p className="text-xs text-gray-400">{tenant.slug}</p>
+                  </td>
+                  <td className="px-5 py-3 text-gray-600">{tenant.plan}</td>
+                  <td className="px-5 py-3">
+                    <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium capitalize ${SUB_STYLES[tenant.status] ?? ''}`}>
+                      {tenant.status}
+                    </span>
+                  </td>
+                  <td className="px-5 py-3 text-gray-500">
+                    {new Date(tenant.created_at).toLocaleDateString('en-GH', {
+                      day: 'numeric', month: 'short', year: 'numeric',
+                    })}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   )

@@ -40,7 +40,7 @@ export function DashboardPage() {
     <div className="space-y-6">
 
       {/* Greeting */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-semibold text-gray-900">
             Good {getTimeOfDay()}, {firstName} 👋
@@ -49,7 +49,7 @@ export function DashboardPage() {
             Here's what's happening with your business today.
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-shrink-0 flex-wrap gap-2">
           <button
             className="px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             onClick={() => navigate('/clients')}
@@ -96,10 +96,10 @@ export function DashboardPage() {
         />
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
 
         {/* Revenue chart */}
-        <div className="col-span-2 bg-white rounded-xl border border-gray-100 p-5">
+        <div className="bg-white rounded-xl border border-gray-100 p-5 xl:col-span-2">
           <h2 className="text-sm font-semibold text-gray-700 mb-4">
             Revenue — last 6 months
           </h2>
@@ -190,26 +190,28 @@ export function DashboardPage() {
             </button>
           </div>
         ) : (
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="text-left border-b border-gray-50">
-                <th className="px-5 py-3 font-medium text-gray-400">Invoice</th>
-                <th className="px-5 py-3 font-medium text-gray-400">Client</th>
-                <th className="px-5 py-3 font-medium text-gray-400">Status</th>
-                <th className="px-5 py-3 font-medium text-gray-400">Due</th>
-                <th className="px-5 py-3 font-medium text-gray-400 text-right">Amount</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {recent.map((inv) => (
-                <RecentInvoiceRow
-                  key={inv.id}
-                  invoice={inv}
-                  onClick={() => navigate(`/invoices/${inv.id}`)}
-                />
-              ))}
-            </tbody>
-          </table>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[640px] text-sm">
+              <thead>
+                <tr className="text-left border-b border-gray-50">
+                  <th className="px-5 py-3 font-medium text-gray-400">Invoice</th>
+                  <th className="px-5 py-3 font-medium text-gray-400">Client</th>
+                  <th className="px-5 py-3 font-medium text-gray-400">Status</th>
+                  <th className="px-5 py-3 font-medium text-gray-400">Due</th>
+                  <th className="px-5 py-3 font-medium text-gray-400 text-right">Amount</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {recent.map((inv) => (
+                  <RecentInvoiceRow
+                    key={inv.id}
+                    invoice={inv}
+                    onClick={() => navigate(`/invoices/${inv.id}`)}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>

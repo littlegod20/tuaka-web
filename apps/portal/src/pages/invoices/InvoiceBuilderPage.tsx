@@ -161,13 +161,13 @@ export function InvoiceBuilderPage() {
   return (
     <form onSubmit={handleSubmit}>
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-semibold text-gray-900">
             {isEditing ? `Edit ${existing?.number}` : `New ${type}`}
           </h1>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-shrink-0 flex-wrap gap-2">
           <Button
             type="button"
             variant="secondary"
@@ -181,16 +181,18 @@ export function InvoiceBuilderPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Left — line items */}
-        <div className="col-span-2 space-y-4">
+        <div className="space-y-4 lg:col-span-2">
 
           {/* Line items card */}
-          <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
-            <div className="px-4 py-3 border-b border-gray-100">
+          <div className="overflow-hidden rounded-xl border border-gray-100 bg-white">
+            <div className="border-b border-gray-100 px-4 py-3">
               <h2 className="text-sm font-medium text-gray-700">Line items</h2>
             </div>
 
+            <div className="overflow-x-auto">
+              <div className="min-w-[640px] lg:min-w-0">
             {/* Column headers */}
             <div className="grid grid-cols-[2fr_1fr_1fr_1fr_auto] gap-3 px-4 py-2 text-xs font-medium text-gray-400">
               <span>Description</span>
@@ -280,14 +282,16 @@ export function InvoiceBuilderPage() {
               ))}
             </div>
 
-            <div className="px-4 py-3 border-t border-gray-50">
+            <div className="border-t border-gray-50 px-4 py-3">
               <button
                 type="button"
-                className="text-sm text-brand-500 hover:text-brand-700 font-medium transition-colors"
+                className="text-sm font-medium text-brand-500 transition-colors hover:text-brand-700"
                 onClick={addLine}
               >
                 + Add line item
               </button>
+            </div>
+              </div>
             </div>
           </div>
 

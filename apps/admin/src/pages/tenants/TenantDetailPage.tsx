@@ -68,8 +68,8 @@ export function TenantDetailPage() {
       </button>
 
       {/* Header */}
-      <div className="flex items-start justify-between mb-6">
-        <div>
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
           <div className="flex items-center gap-3">
             <h1 className="text-xl font-semibold text-gray-900">{tenant.name}</h1>
             <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${SUB_STYLES[tenant.sub_status]}`}>
@@ -78,7 +78,7 @@ export function TenantDetailPage() {
           </div>
           <p className="text-sm text-gray-400 mt-1">{tenant.slug} · {tenant.currency}</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Button
             variant="secondary"
             size="sm"
@@ -97,7 +97,7 @@ export function TenantDetailPage() {
       </div>
 
       {/* Stat cards */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="bg-white rounded-xl border border-gray-100 p-4">
           <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">Members</p>
           <p className="text-2xl font-bold text-gray-900">{tenant.member_count}</p>
@@ -115,7 +115,7 @@ export function TenantDetailPage() {
       {/* Details */}
       <div className="bg-white rounded-xl border border-gray-100 p-5 space-y-4">
         <h2 className="text-sm font-semibold text-gray-700">Subscription details</h2>
-        <div className="grid grid-cols-2 gap-4 text-sm">
+        <div className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
           <div>
             <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">Plan</p>
             <p className="font-medium text-gray-900">{tenant.plan}</p>

@@ -137,6 +137,13 @@ const navItems = [
   { to: '/plans', label: 'Plans', Icon: IconPlans },
 ] as const
 
+function mobileNavLinkClass({ isActive }: { isActive: boolean }) {
+  return cn(
+    'flex min-h-[44px] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1 text-[0.65rem] font-medium leading-tight transition-colors',
+    isActive ? 'bg-brand-50 font-medium text-brand-600' : 'text-gray-600',
+  )
+}
+
 export function AdminLayout() {
   const { mutate: logout, isPending: isLoggingOut } = useAdminLogout()
   const [showSignOutModal, setShowSignOutModal] = useState(false)
@@ -161,7 +168,7 @@ export function AdminLayout() {
     <div className="flex h-screen bg-gray-50">
       <aside
         className={cn(
-          'flex flex-col border-r border-gray-100 bg-white transition-[width] duration-200 ease-out',
+          'hidden flex-col border-r border-gray-100 bg-white transition-[width] duration-200 ease-out lg:flex',
           collapsed ? 'w-[4.25rem]' : 'w-56',
         )}
       >
@@ -233,13 +240,44 @@ export function AdminLayout() {
           </CollapsedTooltip>
         </div>
       </aside>
-      <main className="flex min-h-0 flex-1 flex-col overflow-hidden p-6">
-        <div className="outlet-scroll-area min-h-0 flex-1 overflow-y-auto">
+      <main className="flex min-h-0 flex-1 flex-col overflow-hidden p-4 lg:p-6">
+        <div className="outlet-scroll-area min-h-0 flex-1 overflow-y-auto pb-[max(6.5rem,env(safe-area-inset-bottom)+5.5rem)] lg:pb-0">
           <div className="outlet-page-shell">
             <Outlet />
           </div>
         </div>
       </main>
+
+      <div className="lg:hidden" data-mobile-nav-root>
+        <nav
+          className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none pb-[max(0.35rem,env(safe-area-inset-bottom))]"
+          aria-label="Primary"
+        >
+          <div className="pointer-events-auto mx-3 mb-3 flex h-[3.25rem] items-stretch justify-between gap-0.5 rounded-2xl border border-gray-200 bg-white/95 px-1 py-1 shadow-lg backdrop-blur-md supports-[backdrop-filter]:bg-white/90">
+            {navItems.map(({ to, label, Icon }) => (
+              <NavLink
+                key={to}
+                aria-label={label}
+                className={mobileNavLinkClass}
+                to={to}
+              >
+                <Icon className="h-5 w-5 shrink-0" />
+                <span className="max-w-[4.25rem] truncate text-center">{label}</span>
+              </NavLink>
+            ))}
+            <button
+              aria-label="Sign out"
+              className="flex min-h-[44px] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1 text-[0.65rem] font-medium leading-tight text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700"
+              type="button"
+              onClick={() => setShowSignOutModal(true)}
+            >
+              <IconSignOut className="h-5 w-5 shrink-0" />
+              <span className="max-w-[4.25rem] truncate text-center">Sign out</span>
+            </button>
+          </div>
+        </nav>
+      </div>
+
       <ConfirmDialog
         confirmLabel="Sign out"
         loading={isLoggingOut}

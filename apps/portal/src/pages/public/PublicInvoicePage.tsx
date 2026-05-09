@@ -43,8 +43,8 @@ export function PublicInvoicePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top bar */}
-      <div className="bg-white border-b border-gray-100 px-4 py-3">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
+      <div className="border-b border-gray-100 bg-white px-4 py-3">
+        <div className="mx-auto flex max-w-3xl flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <span className="text-lg font-logo text-gray-900">
             Tua<span className="text-brand-400">Ka</span>
           </span>
@@ -78,9 +78,9 @@ export function PublicInvoicePage() {
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
 
           {/* Header */}
-          <div className="px-6 py-6 border-b border-gray-100">
-            <div className="flex items-start justify-between">
-              <div>
+          <div className="border-b border-gray-100 px-4 py-6 sm:px-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div className="min-w-0">
                 <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
                   {invoice.tenant.name}
                 </p>
@@ -88,7 +88,7 @@ export function PublicInvoicePage() {
                   {docLabel} {invoice.number}
                 </h1>
               </div>
-              <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium capitalize ${
+              <span className={`inline-flex shrink-0 items-center self-start rounded-full px-3 py-1 text-sm font-medium capitalize sm:self-auto ${
                 isPaid
                   ? 'bg-green-50 text-green-700'
                   : invoice.status === 'overdue'
@@ -101,7 +101,7 @@ export function PublicInvoicePage() {
           </div>
 
           {/* Bill to + dates */}
-          <div className="px-6 py-5 grid grid-cols-2 gap-6 border-b border-gray-100">
+          <div className="grid grid-cols-1 gap-6 border-b border-gray-100 px-4 py-5 md:grid-cols-2 md:px-6">
             <div>
               <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-2">
                 Bill to
@@ -183,8 +183,8 @@ export function PublicInvoicePage() {
           </div>
 
           {/* Totals */}
-          <div className="px-6 py-5 border-t border-gray-100">
-            <div className="ml-auto w-64 space-y-2">
+          <div className="border-t border-gray-100 px-4 py-5 sm:px-6">
+            <div className="ml-auto w-full max-w-xs space-y-2 sm:w-64">
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Subtotal</span>
                 <span className="tabular-nums">{formatGHS(invoice.subtotal)}</span>
