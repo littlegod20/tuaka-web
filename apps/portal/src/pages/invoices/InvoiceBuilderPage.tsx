@@ -163,7 +163,7 @@ export function InvoiceBuilderPage() {
       {/* Header */}
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-gray-900">
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
             {isEditing ? `Edit ${existing?.number}` : `New ${type}`}
           </h1>
         </div>
@@ -186,9 +186,9 @@ export function InvoiceBuilderPage() {
         <div className="space-y-4 lg:col-span-2">
 
           {/* Line items card */}
-          <div className="overflow-hidden rounded-xl border border-gray-100 bg-white">
-            <div className="border-b border-gray-100 px-4 py-3">
-              <h2 className="text-sm font-medium text-gray-700">Line items</h2>
+          <div className="overflow-hidden rounded-xl border border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
+            <div className="border-b border-gray-100 px-4 py-3 dark:border-gray-700">
+              <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300">Line items</h2>
             </div>
 
             <div className="overflow-x-auto">
@@ -213,7 +213,7 @@ export function InvoiceBuilderPage() {
                   <div className="flex flex-col gap-1.5">
                     {productsData?.data.length ? (
                       <select
-                        className="w-full rounded-md border border-gray-200 px-2 py-1.5 text-xs text-gray-500 outline-none focus:border-brand-400"
+                        className="w-full rounded-md border border-gray-200 px-2 py-1.5 text-xs text-gray-500 outline-none focus:border-brand-400 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-400"
                         value={item.product_id ?? ''}
                         onChange={(e) => {
                           if (e.target.value) applyProduct(index, e.target.value)
@@ -228,7 +228,7 @@ export function InvoiceBuilderPage() {
                     ) : null}
                     <input
                       required
-                      className={`w-full rounded-md border px-2 py-1.5 text-sm outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400/20 ${errors[`items.${index}.description`] ? 'border-red-400' : 'border-gray-200'}`}
+                      className={`w-full rounded-md border px-2 py-1.5 text-sm outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400/20 dark:bg-gray-900 dark:text-gray-100 ${errors[`items.${index}.description`] ? 'border-red-400' : 'border-gray-200 dark:border-gray-600'}`}
                       placeholder="Description"
                       value={item.description}
                       onChange={(e) => updateItem(index, { description: e.target.value })}
@@ -238,7 +238,7 @@ export function InvoiceBuilderPage() {
                   {/* Quantity */}
                   <input
                     required
-                    className="w-full rounded-md border border-gray-200 px-2 py-1.5 text-sm outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400/20"
+                    className="w-full rounded-md border border-gray-200 px-2 py-1.5 text-sm outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400/20 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
                     min={1}
                     type="number"
                     value={item.quantity}
@@ -252,7 +252,7 @@ export function InvoiceBuilderPage() {
                     <span className="absolute left-2 top-1/2 -translate-y-1/2 text-xs text-gray-400">₵</span>
                     <input
                       required
-                      className="w-full rounded-md border border-gray-200 pl-5 pr-2 py-1.5 text-sm outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400/20"
+                      className="w-full rounded-md border border-gray-200 pl-5 pr-2 py-1.5 text-sm outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400/20 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
                       min={0}
                       placeholder="0.00"
                       step="0.01"
@@ -263,7 +263,7 @@ export function InvoiceBuilderPage() {
                   </div>
 
                   {/* Total */}
-                  <span className="text-right text-sm font-medium text-gray-900 pt-1.5 tabular-nums">
+                  <span className="text-right text-sm font-medium text-gray-900 dark:text-gray-100 pt-1.5 tabular-nums">
                     {formatGHS(item.total)}
                   </span>
 
@@ -296,14 +296,15 @@ export function InvoiceBuilderPage() {
           </div>
 
           {/* Notes */}
-          <div className="bg-white rounded-xl border border-gray-100 p-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+          <div className="bg-white rounded-xl border border-gray-100 dark:border-gray-700 dark:bg-gray-800 p-4">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Notes <span className="font-normal text-gray-400">(optional)</span>
             </label>
             <textarea
               className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm
                 text-gray-900 placeholder-gray-400 outline-none resize-none
-                focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20"
+                focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20
+                dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
               placeholder="Payment terms, bank details, thank you note…"
               rows={3}
               value={notes}
@@ -316,15 +317,15 @@ export function InvoiceBuilderPage() {
         <div className="space-y-4">
 
           {/* Details card */}
-          <div className="bg-white rounded-xl border border-gray-100 p-4 space-y-4">
-            <h2 className="text-sm font-medium text-gray-700">Details</h2>
+          <div className="bg-white rounded-xl border border-gray-100 dark:border-gray-700 dark:bg-gray-800 p-4 space-y-4">
+            <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300">Details</h2>
 
             {/* Type — only on create */}
             {!isEditing && (
               <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-gray-700">Type</label>
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Type</label>
                 <select
-                  className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-brand-400"
+                  className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-brand-400 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
                   value={type}
                   onChange={(e) => setType(e.target.value as 'invoice' | 'quote')}
                 >
@@ -336,10 +337,10 @@ export function InvoiceBuilderPage() {
 
             {/* Client */}
             <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium text-gray-700">Client</label>
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Client</label>
               <select
                 required
-                className={`w-full rounded-lg border px-3 py-2 text-sm outline-none focus:border-brand-400 ${errors.client_id ? 'border-red-400' : 'border-gray-200'}`}
+                className={`w-full rounded-lg border px-3 py-2 text-sm outline-none focus:border-brand-400 dark:bg-gray-900 dark:text-gray-100 ${errors.client_id ? 'border-red-400' : 'border-gray-200 dark:border-gray-600'}`}
                 value={clientId}
                 onChange={(e) => setClientId(e.target.value)}
               >
@@ -355,11 +356,11 @@ export function InvoiceBuilderPage() {
 
             {/* Due date */}
             <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium text-gray-700">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Due date <span className="font-normal text-gray-400">(optional)</span>
               </label>
               <input
-                className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-brand-400"
+                className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-brand-400 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:[color-scheme:dark]"
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
@@ -368,9 +369,9 @@ export function InvoiceBuilderPage() {
 
             {/* Tax rate */}
             <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium text-gray-700">Tax rate (%)</label>
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Tax rate (%)</label>
               <input
-                className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-brand-400"
+                className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-brand-400 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
                 max={100}
                 min={0}
                 placeholder="0"
@@ -382,18 +383,18 @@ export function InvoiceBuilderPage() {
           </div>
 
           {/* Totals card */}
-          <div className="bg-white rounded-xl border border-gray-100 p-4 space-y-2">
-            <div className="flex justify-between text-sm text-gray-600">
+          <div className="bg-white rounded-xl border border-gray-100 dark:border-gray-700 dark:bg-gray-800 p-4 space-y-2">
+            <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
               <span>Subtotal</span>
               <span className="tabular-nums">{formatGHS(subtotal)}</span>
             </div>
             {taxRate > 0 && (
-              <div className="flex justify-between text-sm text-gray-600">
+              <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
                 <span>Tax ({taxRate}%)</span>
                 <span className="tabular-nums">{formatGHS(taxAmount)}</span>
               </div>
             )}
-            <div className="flex justify-between text-base font-semibold text-gray-900 pt-2 border-t border-gray-100">
+            <div className="flex justify-between text-base font-semibold text-gray-900 dark:text-gray-100 pt-2 border-t border-gray-100">
               <span>Total</span>
               <span className="tabular-nums">{formatGHS(total)}</span>
             </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useTenant, useUpdateTenant, type TenantUpdatePayload } from '@tuaka/api-client'
-import { Button, Input } from '@tuaka/ui'
+import { Button, Input, ThemeSwitcher } from '@tuaka/ui'
 
 export function SettingsPage() {
   const { data: tenant, isLoading } = useTenant()
@@ -48,15 +48,26 @@ export function SettingsPage() {
   return (
     <div className="max-w-2xl">
       <div className="mb-6">
-        <h1 className="text-xl font-semibold text-gray-900">Settings</h1>
-        <p className="text-sm text-gray-500 mt-0.5">Manage your workspace settings</p>
+        <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Settings</h1>
+        <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
+          Manage your workspace settings
+        </p>
+      </div>
+
+      <div className="mb-6 space-y-3 rounded-xl border border-gray-100 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+        <div>
+          <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300">Appearance</h2>
+          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            Light, dark, or match your device settings.
+          </p>
+        </div>
+        <ThemeSwitcher />
       </div>
 
       <form className="space-y-6" onSubmit={handleSubmit}>
-
         {/* Business info */}
-        <div className="bg-white rounded-xl border border-gray-100 p-6 space-y-4">
-          <h2 className="text-sm font-semibold text-gray-700">Business info</h2>
+        <div className="bg-white rounded-xl border border-gray-100 dark:border-gray-700 dark:bg-gray-800 p-6 space-y-4">
+          <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300">Business info</h2>
           <Input
             required
             label="Business name"
@@ -93,8 +104,8 @@ export function SettingsPage() {
         </div>
 
         {/* Invoice settings */}
-        <div className="bg-white rounded-xl border border-gray-100 p-6 space-y-4">
-          <h2 className="text-sm font-semibold text-gray-700">Invoice settings</h2>
+        <div className="bg-white rounded-xl border border-gray-100 dark:border-gray-700 dark:bg-gray-800 p-6 space-y-4">
+          <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300">Invoice settings</h2>
           <div>
             <Input
               required
@@ -115,9 +126,9 @@ export function SettingsPage() {
                 })
               }
             />
-            <p className="mt-2 text-xs text-gray-400">
+            <p className="mt-2 text-xs text-gray-400 dark:text-gray-500">
               Preview:{' '}
-              <span className="font-medium text-gray-600">
+              <span className="font-medium text-gray-600 dark:text-gray-300">
                 {values.invoice_prefix || 'INV'}-0001
               </span>
             </p>
@@ -149,7 +160,7 @@ export function SettingsPage() {
             Save changes
           </Button>
           {isSuccess && (
-            <span className="text-sm text-green-600 font-medium">
+            <span className="text-sm font-medium text-green-600 dark:text-green-400">
               Saved ✓
             </span>
           )}

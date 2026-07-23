@@ -13,10 +13,14 @@ import { Modal } from '@/components/ui/Modal'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 
 const SUB_STYLES: Record<string, string> = {
-  active:    'bg-green-50 text-green-700',
-  trialing:  'bg-blue-50 text-blue-700',
-  cancelled: 'bg-gray-100 text-gray-500',
-  free:      'bg-gray-100 text-gray-500',
+  active:
+    'bg-green-50 text-green-700 dark:bg-green-950/60 dark:text-green-300',
+  trialing:
+    'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300',
+  cancelled:
+    'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-300',
+  free:
+    'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-300',
 }
 
 const STATUS_TABS = [
@@ -63,7 +67,7 @@ export function TenantsPage() {
     {
       id: 'plan',
       header: 'Plan',
-      cell: (tenant) => <span className="text-gray-600">{tenant.plan}</span>,
+      cell: (tenant) => <span className="text-gray-600 dark:text-gray-400">{tenant.plan}</span>,
     },
     {
       id: 'status',
@@ -123,20 +127,20 @@ export function TenantsPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-xl font-semibold text-gray-900">Workspaces</h1>
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Workspaces</h1>
           <p className="text-sm text-gray-500 mt-0.5">{data?.meta.total ?? 0} total</p>
         </div>
       </div>
 
       {/* Status tabs */}
-      <div className="flex gap-1 mb-4 border-b border-gray-100">
+      <div className="flex gap-1 mb-4 border-b border-gray-100 dark:border-gray-700">
         {STATUS_TABS.map((tab) => (
           <button
             key={tab.value}
             className={`px-3 py-2 text-sm font-medium border-b-2 transition-colors -mb-px ${
               status === tab.value
-                ? 'border-brand-400 text-brand-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                ? 'border-brand-400 text-brand-600 dark:text-brand-400'
+                : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
             }`}
             type="button"
             onClick={() => { setStatus(tab.value); setPage(1) }}
@@ -149,9 +153,10 @@ export function TenantsPage() {
       {/* Search */}
       <div className="mb-4">
         <input
-          className="w-full max-w-sm rounded-lg border border-gray-200 px-3 py-2 text-sm
+          className="w-full max-w-sm rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm
             text-gray-900 placeholder-gray-400 outline-none
-            focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20"
+            focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20
+            dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
           placeholder="Search by name or slug…"
           value={search}
           onChange={(e) => { setSearch(e.target.value); setPage(1) }}
@@ -185,9 +190,9 @@ export function TenantsPage() {
       <Modal open={!!activating} title={`Activate — ${activating?.name}`} onClose={() => setActivating(null)}>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Plan</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Plan</label>
             <select
-              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-amber-400"
+              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-amber-400 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
               value={planSlug}
               onChange={(e) => setPlanSlug(e.target.value)}
             >
@@ -197,9 +202,9 @@ export function TenantsPage() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Duration (months)</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Duration (months)</label>
             <input
-              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-amber-400"
+              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-amber-400 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
               min={1} max={24} type="number"
               value={months}
               onChange={(e) => setMonths(parseInt(e.target.value) || 1)}

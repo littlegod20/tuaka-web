@@ -1,3 +1,13 @@
+export {
+  THEME_STORAGE_KEY,
+  ThemeProvider,
+  applyDarkClass,
+  prefersDarkScheme,
+  resolveDark,
+  useTheme,
+  type ThemePreference,
+} from './theme'
+export { ThemeSwitcher } from './ThemeSwitcher'
 export { Badge } from './Badge'
 export { Button } from './Button'
 export { Card } from './Card'

@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900 antialiased;
+    @apply bg-gray-50 text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100;
   }
 
   h1,
@@ -29,6 +29,33 @@
   }
 
   .outlet-page-shell > * > :first-child {
-    @apply bg-gray-50 lg:sticky lg:top-0 lg:z-10;
+    @apply bg-gray-50 dark:bg-gray-950 lg:sticky lg:top-0 lg:z-10;
   }
+}
+
+@keyframes landingFadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes landingFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes landingFloat2 {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-8px) rotate(-4deg); }
+}
+
+.landing-fade-up {
+  animation: landingFadeUp 0.7s ease both;
+}
+
+.landing-float {
+  animation: landingFadeUp 0.8s ease 0.2s both, landingFloat 6s ease-in-out 1s infinite;
+}
+
+.landing-float-badge {
+  animation: landingFloat2 5s ease-in-out 1.4s infinite;
 }

@@ -22,7 +22,7 @@ export function VerifyEmailPage() {
 
   if (isPending) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-brand-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className="text-sm text-gray-500">Verifying your email…</p>
@@ -63,10 +63,10 @@ function Result({ type }: { type: 'success' | 'expired' | 'invalid' }) {
   }[type]
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center p-4">
       <div className="w-full max-w-sm text-center">
         <div className="text-5xl mb-4">{config.emoji}</div>
-        <h1 className="text-xl font-semibold text-gray-900 mb-2">{config.title}</h1>
+        <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">{config.title}</h1>
         <p className="text-sm text-gray-500 mb-6">{config.body}</p>
         <Link
           className="inline-block bg-brand-400 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-brand-600 transition-colors"

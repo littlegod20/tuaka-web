@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useMe } from '@tuaka/api-client'
 import { AppLayout } from '@/components/layout/AppLayout'
+import { LandingPage } from '@/pages/LandingPage'
 import { LoginPage } from '@/pages/LoginPage'
 import { ClientsPage } from '@/pages/clients/ClientsPage'
 import { DashboardPage } from '@/pages/dashboard/DashboardPage'
@@ -25,7 +26,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center dark:bg-gray-950">
         <div className="w-6 h-6 border-2 border-brand-400 border-t-transparent rounded-full animate-spin" />
       </div>
     )
@@ -39,13 +40,13 @@ export default function App() {
   return (
     <Sentry.ErrorBoundary
       fallback={({ error, resetError }) => (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center p-4">
           <div className="text-center max-w-sm">
             <div className="text-5xl mb-4">⚠️</div>
-            <h1 className="text-xl font-semibold text-gray-900 mb-2">
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
               Something went wrong
             </h1>
-            <p className="text-sm text-gray-500 mb-6">
+            <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
               We've been notified and are looking into it.
             </p>
             <button
@@ -59,6 +60,7 @@ export default function App() {
       )}
     >
     <Routes>
+      <Route element={<LandingPage />} path="/" />
       <Route element={<LoginPage />} path="/login" />
       <Route element={<RegisterPage />} path="/register" />
       <Route element={<ForgotPasswordPage />} path="/forgot-password" />
@@ -74,9 +76,7 @@ export default function App() {
             <AppLayout />
           </ProtectedRoute>
         }
-        path="/"
         >
-        <Route index element={<Navigate replace to="/dashboard" />} />
         <Route element={<DashboardPage />} path="dashboard" />
         <Route element={<InvoicesPage />} path="invoices" />
         <Route element={<ClientsPage />} path="clients" />

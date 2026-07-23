@@ -132,7 +132,7 @@ export function ProductsPage() {
       id: 'name',
       header: 'Name',
       cell: (row) => (
-        <span className="font-medium text-gray-900">{row.name}</span>
+        <span className="font-medium text-gray-900 dark:text-gray-100">{row.name}</span>
       ),
     },
     {
@@ -150,7 +150,7 @@ export function ProductsPage() {
       headerClassName: 'text-right',
       className: 'text-right',
       cell: (row) => (
-        <span className="font-medium text-gray-900 tabular-nums">
+        <span className="font-medium text-gray-900 dark:text-gray-100 tabular-nums">
           {formatGHS(row.default_price)}
         </span>
       ),
@@ -164,7 +164,7 @@ export function ProductsPage() {
         <div className="inline-flex items-center gap-1">
           <button
             aria-label={`Edit ${product.name}`}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-800"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200"
             type="button"
             onClick={() => { setFormErrors({}); setEditing(product) }}
           >
@@ -187,7 +187,7 @@ export function ProductsPage() {
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="mb-6 flex shrink-0 items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-gray-900">Products & Services</h1>
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Products & Services</h1>
           <p className="mt-0.5 text-sm text-gray-500">
             {data?.meta.total ?? 0} total
           </p>
@@ -199,7 +199,7 @@ export function ProductsPage() {
 
       <div className="mb-4 shrink-0">
         <input
-          className="w-full max-w-sm rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20"
+          className="w-full max-w-sm rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500"
           placeholder="Search products…"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}

@@ -13,11 +13,16 @@ import { ConfirmDialog } from '../../components/ui/ConfirmDialog'
 import { downloadInvoicePdf } from '@tuaka/api-client'
 
 const STATUS_STYLES: Record<string, string> = {
-  draft:   'bg-gray-100 text-gray-600',
-  sent:    'bg-blue-50 text-blue-600',
-  viewed:  'bg-purple-50 text-purple-600',
-  paid:    'bg-green-50 text-green-700',
-  overdue: 'bg-red-50 text-red-600',
+  draft:
+    'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300',
+  sent:
+    'bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-300',
+  viewed:
+    'bg-purple-50 text-purple-600 dark:bg-purple-950/60 dark:text-purple-300',
+  paid:
+    'bg-green-50 text-green-700 dark:bg-green-950/60 dark:text-green-300',
+  overdue:
+    'bg-red-50 text-red-600 dark:bg-red-950/60 dark:text-red-300',
 }
 
 const ACTIVITY_LABELS: Record<string, (meta: any) => string> = {
@@ -91,7 +96,7 @@ export function InvoiceDetailPage() {
             Invoices
           </button>
           <div className="flex items-center gap-3">
-            <h1 className="text-xl font-semibold text-gray-900">{invoice.number}</h1>
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{invoice.number}</h1>
             <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${STATUS_STYLES[invoice.status]}`}>
               {invoice.status}
             </span>
@@ -163,13 +168,13 @@ export function InvoiceDetailPage() {
         <div className="space-y-4 lg:col-span-2">
 
           {/* Client + dates */}
-          <div className="bg-white rounded-xl border border-gray-100 p-6">
+          <div className="bg-white rounded-xl border border-gray-100 dark:border-gray-700 dark:bg-gray-800 p-6">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div>
                 <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
                   Bill to
                 </p>
-                <p className="font-semibold text-gray-900">{invoice.client.name}</p>
+                <p className="font-semibold text-gray-900 dark:text-gray-100">{invoice.client.name}</p>
                 {invoice.client.company && (
                   <p className="text-sm text-gray-500">{invoice.client.company}</p>
                 )}
@@ -188,14 +193,14 @@ export function InvoiceDetailPage() {
                   <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
                     Invoice number
                   </p>
-                  <p className="text-sm font-medium text-gray-900">{invoice.number}</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{invoice.number}</p>
                 </div>
                 {invoice.due_date && (
                   <div>
                     <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
                       Due date
                     </p>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
                       {new Date(invoice.due_date).toLocaleDateString('en-GH', {
                         day: 'numeric', month: 'long', year: 'numeric',
                       })}
@@ -207,7 +212,7 @@ export function InvoiceDetailPage() {
                     <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
                       Sent
                     </p>
-                    <p className="text-sm text-gray-900">
+                    <p className="text-sm text-gray-900 dark:text-gray-100">
                       {new Date(invoice.sent_at).toLocaleDateString('en-GH', {
                         day: 'numeric', month: 'long', year: 'numeric',
                       })}
@@ -231,24 +236,24 @@ export function InvoiceDetailPage() {
           </div>
 
           {/* Line items */}
-          <div className="overflow-hidden rounded-xl border border-gray-100 bg-white">
+          <div className="overflow-hidden rounded-xl border border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[520px] text-sm">
               <thead>
-                <tr className="border-b border-gray-100 text-left">
+                <tr className="border-b border-gray-100 text-left dark:border-gray-700">
                   <th className="px-4 py-3 font-medium text-gray-500">Description</th>
                   <th className="px-4 py-3 font-medium text-gray-500 text-right">Qty</th>
                   <th className="px-4 py-3 font-medium text-gray-500 text-right">Unit price</th>
                   <th className="px-4 py-3 font-medium text-gray-500 text-right">Total</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-gray-50 dark:divide-gray-700">
                 {invoice.items.map((item) => (
                   <tr key={item.id}>
-                    <td className="px-4 py-3 text-gray-900">{item.description}</td>
-                    <td className="px-4 py-3 text-gray-600 text-right tabular-nums">{item.quantity}</td>
-                    <td className="px-4 py-3 text-gray-600 text-right tabular-nums">{formatGHS(item.unit_price)}</td>
-                    <td className="px-4 py-3 font-medium text-gray-900 text-right tabular-nums">{formatGHS(item.total)}</td>
+                    <td className="px-4 py-3 text-gray-900 dark:text-gray-100">{item.description}</td>
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-400 text-right tabular-nums">{item.quantity}</td>
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-400 text-right tabular-nums">{formatGHS(item.unit_price)}</td>
+                    <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100 text-right tabular-nums">{formatGHS(item.total)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -258,17 +263,17 @@ export function InvoiceDetailPage() {
             {/* Totals */}
             <div className="border-t border-gray-100 px-4 py-4">
               <div className="ml-auto w-full max-w-xs space-y-2 sm:w-64">
-                <div className="flex justify-between text-sm text-gray-600">
+                <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
                   <span>Subtotal</span>
                   <span className="tabular-nums">{formatGHS(invoice.subtotal)}</span>
                 </div>
                 {invoice.tax_rate > 0 && (
-                  <div className="flex justify-between text-sm text-gray-600">
+                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
                     <span>Tax ({invoice.tax_rate}%)</span>
                     <span className="tabular-nums">{formatGHS(invoice.tax_amount)}</span>
                   </div>
                 )}
-                <div className="flex justify-between text-base font-semibold text-gray-900 pt-2 border-t border-gray-100">
+                <div className="flex justify-between text-base font-semibold text-gray-900 dark:text-gray-100 pt-2 border-t border-gray-100">
                   <span>Total</span>
                   <span className="tabular-nums">{formatGHS(invoice.total)}</span>
                 </div>
@@ -278,19 +283,19 @@ export function InvoiceDetailPage() {
 
           {/* Notes */}
           {invoice.notes && (
-            <div className="bg-white rounded-xl border border-gray-100 p-6">
+            <div className="bg-white rounded-xl border border-gray-100 dark:border-gray-700 dark:bg-gray-800 p-6">
               <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-2">
                 Notes
               </p>
-              <p className="text-sm text-gray-700 whitespace-pre-line">{invoice.notes}</p>
+              <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-line">{invoice.notes}</p>
             </div>
           )}
         </div>
 
         {/* Right — activity log */}
         <div>
-          <div className="bg-white rounded-xl border border-gray-100 p-4">
-            <h2 className="text-sm font-semibold text-gray-700 mb-4">Activity</h2>
+          <div className="bg-white rounded-xl border border-gray-100 dark:border-gray-700 dark:bg-gray-800 p-4">
+            <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">Activity</h2>
 
             {!invoice.activities?.length ? (
               <p className="text-xs text-gray-400">No activity yet.</p>
@@ -299,7 +304,7 @@ export function InvoiceDetailPage() {
                 {invoice.activities.map((activity) => (
                   <li key={activity.id} className="ml-4">
                     <div className="absolute -left-1.5 mt-1 w-3 h-3 rounded-full bg-brand-100 border-2 border-brand-300" />
-                    <p className="text-xs font-medium text-gray-700">
+                    <p className="text-xs font-medium text-gray-700 dark:text-gray-300">
                     {(ACTIVITY_LABELS[activity.type] ?? (() => activity.type))(activity.meta)}
                     </p>
                     {activity.type === 'sent' &&

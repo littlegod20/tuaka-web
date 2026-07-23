@@ -59,7 +59,7 @@ export function ProductForm({
 
       {/* Price field */}
       <div className="flex flex-col gap-1">
-        <label className="text-sm font-medium text-gray-700">
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
           Default price (GHS)
         </label>
         <div className="relative">
@@ -71,7 +71,8 @@ export function ProductForm({
             className={`w-full rounded-lg border px-3 py-2 pl-12 text-sm text-gray-900
               placeholder-gray-400 outline-none transition-colors
               focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20
-              ${errors.default_price ? 'border-red-400' : 'border-gray-200'}`}
+              dark:bg-gray-900 dark:text-gray-100
+              ${errors.default_price ? 'border-red-400' : 'border-gray-200 dark:border-gray-600'}`}
             min="0"
             name="price"
             placeholder="0.00"
@@ -88,14 +89,15 @@ export function ProductForm({
 
       {/* Description */}
       <div className="flex flex-col gap-1">
-        <label className="text-sm font-medium text-gray-700">
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
           Description{' '}
           <span className="font-normal text-gray-400">(optional)</span>
         </label>
         <textarea
           className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm
             text-gray-900 placeholder-gray-400 outline-none transition-colors
-            focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20 resize-none"
+            focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20 resize-none
+            dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
           name="description"
           placeholder="Brief description shown on invoices"
           rows={3}
