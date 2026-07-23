@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { useAdminLogout } from '@tuaka/api-client'
+import { ThemeSwitcher } from '@tuaka/ui'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 
 const SIDEBAR_COLLAPSED_KEY = 'tuaka_admin_sidebar_collapsed'
@@ -140,7 +141,9 @@ const navItems = [
 function mobileNavLinkClass({ isActive }: { isActive: boolean }) {
   return cn(
     'flex min-h-[44px] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1 text-[0.65rem] font-medium leading-tight transition-colors',
-    isActive ? 'bg-brand-50 font-medium text-brand-600' : 'text-gray-600',
+    isActive
+      ? 'bg-brand-50 font-medium text-brand-600 dark:bg-brand-950/40 dark:text-brand-400'
+      : 'text-gray-600 dark:text-gray-400',
   )
 }
 
@@ -165,24 +168,24 @@ export function AdminLayout() {
   }, [collapsed])
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-950">
       <aside
         className={cn(
-          'hidden flex-col border-r border-gray-100 bg-white transition-[width] duration-200 ease-out lg:flex',
+          'hidden flex-col border-r border-gray-100 bg-white transition-[width] duration-200 ease-out dark:border-gray-800 dark:bg-gray-900 lg:flex',
           collapsed ? 'w-[4.25rem]' : 'w-56',
         )}
       >
         <div
           className={cn(
-            'flex items-center border-b border-gray-100',
+            'flex items-center border-b border-gray-100 dark:border-gray-800',
             collapsed ? 'flex-col gap-2 px-2 py-3' : 'justify-between gap-2 px-3 py-4 pl-4',
           )}
         >
           {!collapsed && (
-            <span className="inline-block min-w-0 text-lg font-logo text-gray-900">
+            <span className="inline-block min-w-0 text-lg font-logo text-gray-900 dark:text-gray-100">
               Tua<span className="text-brand-400">Ka</span>
-              <sup className="ml-0.5 align-super font-sans text-[0.55rem] font-semibold leading-none text-brand-600">
-                <span className="rounded bg-brand-100 px-1 py-px">Admin</span>
+              <sup className="ml-0.5 align-super font-sans text-[0.55rem] font-semibold leading-none text-brand-600 dark:text-brand-400">
+                <span className="rounded bg-brand-100 px-1 py-px dark:bg-brand-900/60">Admin</span>
               </sup>
             </span>
           )}
@@ -190,7 +193,7 @@ export function AdminLayout() {
             aria-expanded={!collapsed}
             aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             className={cn(
-              'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900',
+              'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100',
               collapsed && 'mx-auto',
             )}
             type="button"
@@ -210,8 +213,8 @@ export function AdminLayout() {
                     'flex items-center rounded-lg text-sm transition-colors',
                     collapsed ? 'justify-center px-2 py-2.5' : 'gap-3 px-3 py-2',
                     isActive
-                      ? 'bg-brand-50 font-medium text-brand-600'
-                      : 'text-gray-600 hover:bg-gray-50',
+                      ? 'bg-brand-50 font-medium text-brand-600 dark:bg-brand-950/40 dark:text-brand-400'
+                      : 'text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800',
                   )
                 }
                 to={to}
@@ -223,12 +226,21 @@ export function AdminLayout() {
           ))}
         </nav>
 
-        <div className="border-t border-gray-100 p-2">
+        {!collapsed && (
+          <div className="border-t border-gray-100 px-3 py-3 dark:border-gray-800">
+            <p className="mb-2 text-xs font-medium text-gray-500 dark:text-gray-400">
+              Appearance
+            </p>
+            <ThemeSwitcher />
+          </div>
+        )}
+
+        <div className="border-t border-gray-100 p-2 dark:border-gray-800">
           <CollapsedTooltip label="Sign out" show={collapsed}>
             <button
               aria-label={collapsed ? 'Sign out' : undefined}
               className={cn(
-                'flex w-full items-center rounded-lg text-sm text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700',
+                'flex w-full items-center rounded-lg text-sm text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200',
                 collapsed ? 'justify-center px-2 py-2.5' : 'gap-3 px-3 py-2 text-left',
               )}
               type="button"
@@ -253,7 +265,7 @@ export function AdminLayout() {
           className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none pb-[max(0.35rem,env(safe-area-inset-bottom))]"
           aria-label="Primary"
         >
-          <div className="pointer-events-auto mx-3 mb-3 flex h-[3.25rem] items-stretch justify-between gap-0.5 rounded-2xl border border-gray-200 bg-white/95 px-1 py-1 shadow-lg backdrop-blur-md supports-[backdrop-filter]:bg-white/90">
+          <div className="pointer-events-auto mx-3 mb-3 flex h-[3.25rem] items-stretch justify-between gap-0.5 rounded-2xl border border-gray-200 bg-white/95 px-1 py-1 shadow-lg backdrop-blur-md supports-[backdrop-filter]:bg-white/90 dark:border-gray-700 dark:bg-gray-900/95 supports-[backdrop-filter]:dark:bg-gray-900/90">
             {navItems.map(({ to, label, Icon }) => (
               <NavLink
                 key={to}
@@ -267,7 +279,7 @@ export function AdminLayout() {
             ))}
             <button
               aria-label="Sign out"
-              className="flex min-h-[44px] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1 text-[0.65rem] font-medium leading-tight text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700"
+              className="flex min-h-[44px] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1 text-[0.65rem] font-medium leading-tight text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800/80 dark:hover:text-gray-200"
               type="button"
               onClick={() => setShowSignOutModal(true)}
             >

@@ -43,18 +43,20 @@ export function LoginPage() {
     : null
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
-          <span className="text-3xl font-logo text-gray-900">
+          <span className="text-3xl font-logo text-gray-900 dark:text-gray-100">
             Tua<span className="text-brand-400">Ka</span>
           </span>
-          <p className="mt-2 text-sm text-gray-500">Sign in to your workspace</p>
+          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            Sign in to your workspace
+          </p>
         </div>
 
         {/* Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div className="rounded-2xl border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 p-6">
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <Input
             required
@@ -106,7 +108,7 @@ export function LoginPage() {
           </form>
         </div>
 
-        <p className="text-center text-sm text-gray-500 mt-6">
+        <p className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
           No account?{' '}
           <Link className="text-brand-500 hover:underline font-medium" to="/register">
             Create your workspace

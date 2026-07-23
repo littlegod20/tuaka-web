@@ -36,13 +36,13 @@ export function OnboardingChecklist() {
   const progress  = Math.round((doneCount / steps.length) * 100)
 
   return (
-    <div className="bg-white rounded-xl border border-brand-100 p-5 mb-6">
-      <div className="flex items-center justify-between mb-3">
+    <div className="mb-6 rounded-xl border border-brand-100 bg-white p-5 dark:border-brand-900/50 dark:bg-gray-800">
+      <div className="mb-3 flex items-center justify-between">
         <div>
-          <h2 className="text-sm font-semibold text-gray-900">
+          <h2 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
             Get started with TuaKa
           </h2>
-          <p className="text-xs text-gray-400 mt-0.5">
+          <p className="mt-0.5 text-xs text-gray-400 dark:text-gray-500">
             {doneCount} of {steps.length} steps complete
           </p>
         </div>
@@ -50,7 +50,7 @@ export function OnboardingChecklist() {
       </div>
 
       {/* Progress bar */}
-      <div className="w-full bg-gray-100 rounded-full h-1.5 mb-4">
+      <div className="mb-4 h-1.5 w-full rounded-full bg-gray-100 dark:bg-gray-700">
         <div
           className="bg-brand-400 h-1.5 rounded-full transition-all duration-500"
           style={{ width: `${progress}%` }}
@@ -62,8 +62,10 @@ export function OnboardingChecklist() {
         {steps.map((step) => (
           <div
             key={step.key}
-            className={`flex items-center justify-between p-3 rounded-lg transition-colors ${
-              step.done ? 'bg-green-50' : 'bg-gray-50 hover:bg-gray-100'
+            className={`flex items-center justify-between rounded-lg p-3 transition-colors ${
+              step.done
+                ? 'bg-green-50 dark:bg-green-950/40'
+                : 'bg-gray-50 hover:bg-gray-100 dark:bg-gray-900/40 dark:hover:bg-gray-700/50'
             }`}
           >
             <div className="flex items-center gap-3">
@@ -80,15 +82,15 @@ export function OnboardingChecklist() {
               </div>
               <span className={`text-sm ${
                 step.done
-                  ? 'text-green-700 line-through decoration-green-400'
-                  : 'text-gray-700'
+                  ? 'text-green-700 line-through decoration-green-400 dark:text-green-300 dark:decoration-green-600'
+                  : 'text-gray-700 dark:text-gray-300'
               }`}>
                 {step.label}
               </span>
             </div>
             {!step.done && (
               <button
-                className="text-xs font-medium text-brand-500 hover:text-brand-700 transition-colors"
+                className="text-xs font-medium text-brand-500 transition-colors hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
                 onClick={() => navigate(step.path)}
               >
                 {step.action} →

@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900 antialiased;
+    @apply bg-gray-50 text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100;
   }
 
   h1,
@@ -29,6 +29,6 @@
   }
 
   .outlet-page-shell > * > :first-child {
-    @apply bg-gray-50 lg:sticky lg:top-0 lg:z-10;
+    @apply bg-gray-50 dark:bg-gray-950 lg:sticky lg:top-0 lg:z-10;
   }
 }

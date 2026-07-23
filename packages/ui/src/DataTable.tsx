@@ -131,11 +131,11 @@ export function DataTable<T extends { id: string }>({
 
   return (
     <div
-      className={`flex w-full flex-col overflow-hidden rounded-xl border border-gray-100 bg-white ${className ?? ''}`}
+      className={`flex w-full flex-col overflow-hidden rounded-xl border border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800 ${className ?? ''}`}
     >
       {showBulkBar && (
-        <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-brand-100 bg-brand-50/80 px-4 py-3">
-          <p className="text-sm font-medium text-brand-900">
+        <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-brand-100 bg-brand-50/80 px-4 py-3 dark:border-brand-900/40 dark:bg-brand-950/40">
+          <p className="text-sm font-medium text-brand-900 dark:text-brand-100">
             {selectedCount} selected
           </p>
           <div className="flex flex-wrap items-center gap-2">
@@ -160,7 +160,7 @@ export function DataTable<T extends { id: string }>({
             ))}
             {showClearSelection && (
               <button
-                className="text-sm font-medium text-brand-700 underline-offset-2 hover:underline"
+                className="text-sm font-medium text-brand-700 underline-offset-2 hover:underline dark:text-brand-300"
                 type="button"
                 onClick={clearSelection}
               >
@@ -185,12 +185,12 @@ export function DataTable<T extends { id: string }>({
             <thead className="text-left">
               <tr>
                 {selection && (
-                  <th className="sticky top-0 z-[1] w-10 border-b border-gray-100 bg-white px-3 py-3">
+                  <th className="sticky top-0 z-[1] w-10 border-b border-gray-100 bg-white px-3 py-3 dark:border-gray-700 dark:bg-gray-800">
                     <input
                       ref={headerCheckboxRef}
                       aria-label="Select all on this page"
                       checked={allOnPageSelected}
-                      className="h-4 w-4 rounded border-gray-300 accent-brand-400 focus:ring-offset-0"
+                      className="h-4 w-4 rounded border-gray-300 accent-brand-400 focus:ring-offset-0 dark:border-gray-500"
                       type="checkbox"
                       onChange={toggleSelectAllOnPage}
                     />
@@ -199,28 +199,28 @@ export function DataTable<T extends { id: string }>({
                 {columns.map((col) => (
                   <th
                     key={col.id}
-                    className={`sticky top-0 z-[1] border-b border-gray-100 bg-white px-4 py-3 font-medium text-gray-500 ${col.headerClassName ?? ''}`}
+                    className={`sticky top-0 z-[1] border-b border-gray-100 bg-white px-4 py-3 font-medium text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 ${col.headerClassName ?? ''}`}
                   >
                     {col.header}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50 bg-white">
+            <tbody className="divide-y divide-gray-50 bg-white dark:divide-gray-700 dark:bg-gray-800">
               {rows.map((row) => {
                 const id = getRowId(row)
                 const checked = selectedIds.includes(id)
                 return (
                   <tr
                     key={id}
-                    className="transition-colors hover:bg-gray-50"
+                    className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-700/50"
                   >
                     {selection && (
                       <td className="px-3 py-3">
                         <input
                           aria-label={`Select row ${id}`}
                           checked={checked}
-                          className="h-4 w-4 rounded border-gray-300 accent-brand-400 focus:ring-offset-0"
+                          className="h-4 w-4 rounded border-gray-300 accent-brand-400 focus:ring-offset-0 dark:border-gray-500"
                           type="checkbox"
                           onChange={() => toggleRow(id)}
                         />
@@ -243,14 +243,14 @@ export function DataTable<T extends { id: string }>({
       )}
 
       {pagination && !isLoading && rows.length > 0 && (
-        <div className="flex shrink-0 flex-wrap items-center gap-3 border-t border-gray-100 px-4 py-3 text-sm">
-          <p className="min-w-0 flex-1 text-gray-600">
+        <div className="flex shrink-0 flex-wrap items-center gap-3 border-t border-gray-100 px-4 py-3 text-sm dark:border-gray-700">
+          <p className="min-w-0 flex-1 text-gray-600 dark:text-gray-400">
             Showing{' '}
-            <span className="font-medium text-gray-900">
+            <span className="font-medium text-gray-900 dark:text-gray-100">
               {showingFrom.toLocaleString()}–{showingTo.toLocaleString()}
             </span>{' '}
             of{' '}
-            <span className="font-medium text-gray-900">
+            <span className="font-medium text-gray-900 dark:text-gray-100">
               {pagination.meta.total.toLocaleString()}
             </span>{' '}
             {pagination.itemLabel ?? 'rows'}

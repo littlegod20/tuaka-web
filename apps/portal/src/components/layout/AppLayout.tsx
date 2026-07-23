@@ -337,25 +337,27 @@ export function AppLayout() {
   const mobileNavLinkClass = ({ isActive }: { isActive: boolean }) =>
     cn(
       'flex min-h-[44px] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1 text-[0.65rem] font-medium leading-tight transition-colors',
-      isActive ? 'bg-brand-50 font-medium text-brand-600' : 'text-gray-600',
+      isActive
+        ? 'bg-brand-50 font-medium text-brand-600 dark:bg-brand-950/40 dark:text-brand-400'
+        : 'text-gray-600 dark:text-gray-400',
     )
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-950">
       <aside
         className={cn(
-          'hidden flex-col border-r border-gray-100 bg-white transition-[width] duration-200 ease-out lg:flex',
+          'hidden flex-col border-r border-gray-100 bg-white transition-[width] duration-200 ease-out dark:border-gray-800 dark:bg-gray-900 lg:flex',
           collapsed ? 'w-[4.25rem]' : 'w-56',
         )}
       >
         <div
           className={cn(
-            'flex items-center border-b border-gray-100',
+            'flex items-center border-b border-gray-100 dark:border-gray-800',
             collapsed ? 'flex-col gap-2 px-2 py-3' : 'justify-between px-3 py-4 pl-4',
           )}
         >
           {!collapsed && (
-            <span className="text-lg font-logo text-gray-900">
+            <span className="text-lg font-logo text-gray-900 dark:text-gray-100">
               Tua<span className="text-brand-400">Ka</span>
             </span>
           )}
@@ -363,7 +365,7 @@ export function AppLayout() {
             aria-expanded={!collapsed}
             aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             className={cn(
-              'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900',
+              'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100',
               collapsed && 'mx-auto',
             )}
             type="button"
@@ -383,8 +385,8 @@ export function AppLayout() {
                     'flex items-center rounded-lg text-sm transition-colors',
                     collapsed ? 'justify-center px-2 py-2.5' : 'gap-3 px-3 py-2',
                     isActive
-                      ? 'bg-brand-50 text-brand-600 font-medium'
-                      : 'text-gray-600 hover:bg-gray-50',
+                      ? 'bg-brand-50 font-medium text-brand-600 dark:bg-brand-950/40 dark:text-brand-400'
+                      : 'text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800',
                   )
                 }
                 to={to}
@@ -396,12 +398,12 @@ export function AppLayout() {
           ))}
         </nav>
 
-        <div className="border-t border-gray-100 p-2">
+        <div className="border-t border-gray-100 p-2 dark:border-gray-800">
           <CollapsedTooltip label="Sign out" show={collapsed}>
             <button
               aria-label={collapsed ? 'Sign out' : undefined}
               className={cn(
-                'flex w-full items-center rounded-lg text-sm text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700',
+                'flex w-full items-center rounded-lg text-sm text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200',
                 collapsed ? 'justify-center px-2 py-2.5' : 'gap-3 px-3 py-2 text-left',
               )}
               type="button"
@@ -417,12 +419,12 @@ export function AppLayout() {
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Verification banner */}
         {isUnverified && (
-          <div className="flex flex-col gap-2 border-b border-amber-100 bg-amber-50 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:px-6">
-            <p className="text-sm text-amber-800">
+          <div className="flex flex-col gap-2 border-b border-amber-100 bg-amber-50 px-4 py-2.5 dark:border-amber-900/40 dark:bg-amber-950/40 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:px-6">
+            <p className="text-sm text-amber-800 dark:text-amber-200">
               Please verify your email to enable invoice sending.
             </p>
             <button
-              className="shrink-0 self-start text-sm font-medium text-amber-700 underline underline-offset-2 hover:text-amber-900 disabled:opacity-50 sm:self-auto"
+              className="shrink-0 self-start text-sm font-medium text-amber-700 underline underline-offset-2 hover:text-amber-900 disabled:opacity-50 dark:text-amber-300 dark:hover:text-amber-100 sm:self-auto"
               disabled={resending || resent}
               type="button"
               onClick={() => resend()}
@@ -432,12 +434,12 @@ export function AppLayout() {
           </div>
         )}
         {showTrialWarn && (
-          <div className="flex flex-col gap-2 border-b border-blue-100 bg-blue-50 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:px-6">
-            <p className="text-sm text-blue-800">
+          <div className="flex flex-col gap-2 border-b border-blue-100 bg-blue-50 px-4 py-2.5 dark:border-blue-900/40 dark:bg-blue-950/40 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:px-6">
+            <p className="text-sm text-blue-800 dark:text-blue-200">
               Your free trial ends in <strong>{daysLeft} day{daysLeft === 1 ? '' : 's'}</strong>.
             </p>
             <button
-              className="shrink-0 self-start text-sm font-medium text-blue-700 underline underline-offset-2 hover:text-blue-900 sm:self-auto"
+              className="shrink-0 self-start text-sm font-medium text-blue-700 underline underline-offset-2 hover:text-blue-900 dark:text-blue-300 dark:hover:text-blue-100 sm:self-auto"
               onClick={() => navigate('/billing')}
             >
               Upgrade now
@@ -446,13 +448,13 @@ export function AppLayout() {
         )}
 
         {limitReached && isFreeTier && (
-          <div className="flex flex-col gap-2 border-b border-red-100 bg-red-50 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:px-6">
-            <p className="text-sm text-red-800">
+          <div className="flex flex-col gap-2 border-b border-red-100 bg-red-50 px-4 py-2.5 dark:border-red-900/40 dark:bg-red-950/40 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:px-6">
+            <p className="text-sm text-red-800 dark:text-red-200">
               You've used all <strong>{usage?.invoice_limit}</strong> free invoices
               this month.
             </p>
             <button
-              className="shrink-0 self-start text-sm font-medium text-red-700 underline underline-offset-2 hover:text-red-900 sm:self-auto"
+              className="shrink-0 self-start text-sm font-medium text-red-700 underline underline-offset-2 hover:text-red-900 dark:text-red-300 dark:hover:text-red-100 sm:self-auto"
               onClick={() => navigate('/billing')}
             >
               Upgrade to continue
@@ -463,7 +465,7 @@ export function AppLayout() {
         <main className="relative flex min-h-0 flex-1 flex-col overflow-hidden">
           <button
             aria-label="Open search"
-            className="fixed bottom-[calc(6rem+env(safe-area-inset-bottom))] right-4 z-30 flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-md transition-colors hover:border-gray-300 hover:bg-gray-50 lg:hidden"
+            className="fixed bottom-[calc(6rem+env(safe-area-inset-bottom))] right-4 z-30 flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-md transition-colors hover:border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-700 lg:hidden"
             type="button"
             onClick={() => setPaletteOpen(true)}
           >
@@ -474,7 +476,7 @@ export function AppLayout() {
 
           <div className="hidden shrink-0 justify-end px-9 pb-2 pt-6 lg:flex">
             <button
-              className="flex w-fit items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-400 transition-colors hover:border-gray-300"
+              className="flex w-fit items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-400 transition-colors hover:border-gray-300 dark:border-gray-600 dark:text-gray-500 dark:hover:border-gray-500"
               type="button"
               onClick={() => setPaletteOpen(true)}
             >
@@ -482,7 +484,7 @@ export function AppLayout() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <span className="flex-1 text-left">Search</span>
-              <kbd className="rounded bg-gray-100 px-1 text-xs">⌘K</kbd>
+              <kbd className="rounded bg-gray-100 px-1 text-xs dark:bg-gray-700 dark:text-gray-400">⌘K</kbd>
             </button>
           </div>
           <div className="outlet-scroll-area min-h-0 flex-1 overflow-y-auto px-4 pb-[max(6.5rem,env(safe-area-inset-bottom)+5.5rem)] pt-4 lg:px-6 lg:pb-6 lg:pt-0">
@@ -504,12 +506,12 @@ export function AppLayout() {
               onClick={() => setMoreMenuOpen(false)}
             />
             <div
-              className="fixed left-3 right-3 z-50 max-h-[min(70vh,22rem)] overflow-y-auto rounded-xl border border-gray-200 bg-white p-2 shadow-xl"
+              className="fixed left-3 right-3 z-50 max-h-[min(70vh,22rem)] overflow-y-auto rounded-xl border border-gray-200 bg-white p-2 shadow-xl dark:border-gray-700 dark:bg-gray-800"
               style={{
                 bottom: 'max(5.75rem, calc(4.75rem + env(safe-area-inset-bottom, 0px)))',
               }}
             >
-              <p className="px-2 pb-2 text-xs font-medium uppercase tracking-wide text-gray-400">
+              <p className="px-2 pb-2 text-xs font-medium uppercase tracking-wide text-gray-400 dark:text-gray-500">
                 More
               </p>
               <div className="space-y-1">
@@ -520,8 +522,8 @@ export function AppLayout() {
                       cn(
                         'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors',
                         isActive
-                          ? 'bg-brand-50 font-medium text-brand-600'
-                          : 'text-gray-700 hover:bg-gray-50',
+                          ? 'bg-brand-50 font-medium text-brand-600 dark:bg-brand-950/40 dark:text-brand-400'
+                          : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50',
                       )
                     }
                     to={to}
@@ -532,7 +534,7 @@ export function AppLayout() {
                   </NavLink>
                 ))}
                 <button
-                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700"
+                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-700/50 dark:hover:text-gray-200"
                   type="button"
                   onClick={() => {
                     setMoreMenuOpen(false)
@@ -551,7 +553,7 @@ export function AppLayout() {
           className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none pb-[max(0.35rem,env(safe-area-inset-bottom))]"
           aria-label="Primary"
         >
-          <div className="pointer-events-auto mx-3 mb-3 flex h-[3.25rem] items-stretch justify-between gap-0.5 rounded-2xl border border-gray-200 bg-white/95 px-1 py-1 shadow-lg backdrop-blur-md supports-[backdrop-filter]:bg-white/90">
+          <div className="pointer-events-auto mx-3 mb-3 flex h-[3.25rem] items-stretch justify-between gap-0.5 rounded-2xl border border-gray-200 bg-white/95 px-1 py-1 shadow-lg backdrop-blur-md supports-[backdrop-filter]:bg-white/90 dark:border-gray-700 dark:bg-gray-900/95 supports-[backdrop-filter]:dark:bg-gray-900/90">
             {primaryBottomNavItems.map(({ to, label, Icon }) => (
               <NavLink
                 key={to}
@@ -568,7 +570,7 @@ export function AppLayout() {
               aria-label="More"
               className={cn(
                 'flex min-h-[44px] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1 text-[0.65rem] font-medium leading-tight transition-colors',
-                moreMenuOpen ? 'text-brand-600' : 'text-gray-600',
+                moreMenuOpen ? 'text-brand-600 dark:text-brand-400' : 'text-gray-600 dark:text-gray-400',
               )}
               type="button"
               onClick={() => setMoreMenuOpen((o) => !o)}

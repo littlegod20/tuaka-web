@@ -22,10 +22,10 @@ export function ResetPasswordPage() {
   // Bad link — token or email missing
   if (!token || !email) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center p-4">
         <div className="w-full max-w-sm text-center">
           <div className="text-5xl mb-4">⚠️</div>
-          <h1 className="text-xl font-semibold text-gray-900 mb-2">Invalid link</h1>
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Invalid link</h1>
           <p className="text-sm text-gray-500 mb-6">
             This reset link is missing required information.
           </p>
@@ -56,10 +56,10 @@ export function ResetPasswordPage() {
 
   if (done) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center p-4">
         <div className="w-full max-w-sm text-center">
           <div className="text-5xl mb-4">✅</div>
-          <h1 className="text-xl font-semibold text-gray-900 mb-2">Password updated</h1>
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Password updated</h1>
           <p className="text-sm text-gray-500 mb-6">
             Your password has been reset. You can now sign in with your new password.
           </p>
@@ -75,16 +75,16 @@ export function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <span className="text-3xl font-logo text-gray-900">
+          <span className="text-3xl font-logo text-gray-900 dark:text-gray-100">
             Tua<span className="text-brand-400">Ka</span>
           </span>
           <p className="mt-2 text-sm text-gray-500">Choose a new password</p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div className="rounded-2xl border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 p-6">
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <Input
               required

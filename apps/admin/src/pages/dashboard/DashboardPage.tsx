@@ -3,10 +3,14 @@ import { formatGHS } from '@tuaka/utils'
 import { useNavigate } from 'react-router-dom'
 
 const SUB_STYLES: Record<string, string> = {
-  active:    'bg-green-50 text-green-700',
-  trialing:  'bg-blue-50 text-blue-700',
-  cancelled: 'bg-gray-100 text-gray-500',
-  free:      'bg-gray-100 text-gray-500',
+  active:
+    'bg-green-50 text-green-700 dark:bg-green-950/60 dark:text-green-300',
+  trialing:
+    'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300',
+  cancelled:
+    'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-300',
+  free:
+    'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-300',
 }
 
 export function DashboardPage() {
@@ -28,7 +32,7 @@ export function DashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
+        <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Dashboard</h1>
         <p className="text-sm text-gray-500 mt-0.5">Platform overview</p>
       </div>
 
@@ -42,8 +46,8 @@ export function DashboardPage() {
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
         {/* Signups chart */}
-        <div className="bg-white rounded-xl border border-gray-100 p-5 xl:col-span-2">
-          <h2 className="text-sm font-semibold text-gray-700 mb-4">
+        <div className="bg-white rounded-xl border border-gray-100 dark:border-gray-700 dark:bg-gray-800 p-5 xl:col-span-2">
+          <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">
             New workspaces — last 6 months
           </h2>
           {chart.every((m) => m.count === 0) ? (
@@ -76,8 +80,8 @@ export function DashboardPage() {
         </div>
 
         {/* Subscription breakdown */}
-        <div className="bg-white rounded-xl border border-gray-100 p-5">
-          <h2 className="text-sm font-semibold text-gray-700 mb-4">
+        <div className="bg-white rounded-xl border border-gray-100 dark:border-gray-700 dark:bg-gray-800 p-5">
+          <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">
             Subscriptions
           </h2>
           <div className="space-y-3">
@@ -88,10 +92,10 @@ export function DashboardPage() {
             ].map((item) => (
               <div key={item.label}>
                 <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-600">{item.label}</span>
-                  <span className="font-medium text-gray-900">{item.value}</span>
+                  <span className="text-gray-600 dark:text-gray-400">{item.label}</span>
+                  <span className="font-medium text-gray-900 dark:text-gray-100">{item.value}</span>
                 </div>
-                <div className="w-full bg-gray-100 rounded-full h-1.5">
+                <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5">
                   <div
                     className={`${item.color} h-1.5 rounded-full transition-all`}
                     style={{
@@ -108,9 +112,9 @@ export function DashboardPage() {
       </div>
 
       {/* Recent tenants */}
-      <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-100 dark:border-gray-700 dark:bg-gray-800 overflow-hidden">
         <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-gray-700">Recent workspaces</h2>
+          <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300">Recent workspaces</h2>
           <button
             className="text-xs text-brand-400 hover:underline font-medium"
             onClick={() => navigate('/tenants')}
@@ -121,25 +125,25 @@ export function DashboardPage() {
         <div className="overflow-x-auto">
           <table className="w-full min-w-[560px] text-sm">
             <thead>
-              <tr className="text-left border-b border-gray-50">
+              <tr className="text-left border-b border-gray-50 dark:border-gray-700">
                 <th className="px-5 py-3 font-medium text-gray-400">Workspace</th>
                 <th className="px-5 py-3 font-medium text-gray-400">Plan</th>
                 <th className="px-5 py-3 font-medium text-gray-400">Status</th>
                 <th className="px-5 py-3 font-medium text-gray-400">Joined</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-gray-50 dark:divide-gray-700">
               {data?.recent_tenants.map((tenant) => (
                 <tr
                   key={tenant.id}
-                  className="cursor-pointer transition-colors hover:bg-gray-50"
+                  className="cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-700/50"
                   onClick={() => navigate(`/tenants/${tenant.id}`)}
                 >
                   <td className="px-5 py-3">
-                    <p className="font-medium text-gray-900">{tenant.name}</p>
+                    <p className="font-medium text-gray-900 dark:text-gray-100">{tenant.name}</p>
                     <p className="text-xs text-gray-400">{tenant.slug}</p>
                   </td>
-                  <td className="px-5 py-3 text-gray-600">{tenant.plan}</td>
+                  <td className="px-5 py-3 text-gray-600 dark:text-gray-400">{tenant.plan}</td>
                   <td className="px-5 py-3">
                     <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium capitalize ${SUB_STYLES[tenant.status] ?? ''}`}>
                       {tenant.status}
@@ -162,12 +166,12 @@ export function DashboardPage() {
 
 function StatCard({ label, value, icon, sub }: { label: string; value: string; icon: string; sub?: string }) {
   return (
-    <div className="bg-white rounded-xl border border-gray-100 p-5">
+    <div className="bg-white rounded-xl border border-gray-100 dark:border-gray-700 dark:bg-gray-800 p-5">
       <div className="flex items-center justify-between mb-3">
         <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">{label}</span>
         <span className="text-xl">{icon}</span>
       </div>
-      <p className="text-2xl font-bold text-gray-900 tabular-nums">{value}</p>
+      <p className="text-2xl font-bold text-gray-900 dark:text-gray-100 tabular-nums">{value}</p>
       {sub && <p className="text-xs text-gray-400 mt-1">{sub}</p>}
     </div>
   )

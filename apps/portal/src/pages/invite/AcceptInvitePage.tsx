@@ -34,7 +34,7 @@ export function AcceptInvitePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center">
         <div className="w-6 h-6 border-2 border-brand-400 border-t-transparent rounded-full animate-spin" />
       </div>
     )
@@ -46,16 +46,16 @@ export function AcceptInvitePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <span className="text-3xl font-logo text-gray-900">
+          <span className="text-3xl font-logo text-gray-900 dark:text-gray-100">
             Tua<span className="text-brand-400">Ka</span>
           </span>
           <p className="mt-2 text-sm text-gray-500">
             You've been invited to join
           </p>
-          <p className="text-lg font-bold text-gray-900 mt-1">
+          <p className="text-lg font-bold text-gray-900 dark:text-gray-100 mt-1">
             {invite?.tenant_name}
           </p>
           <span className={`inline-flex items-center mt-2 px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${
@@ -67,7 +67,7 @@ export function AcceptInvitePage() {
           </span>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div className="rounded-2xl border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 p-6">
           <p className="text-sm text-gray-500 mb-4">
             Set up your account to accept the invitation.
           </p>
@@ -90,9 +90,9 @@ export function AcceptInvitePage() {
               value={values.password}
               onChange={handleChange}
             />
-            <div className="bg-gray-50 rounded-lg px-3 py-2">
-              <p className="text-xs text-gray-500">
-                Joining as <span className="font-medium">{invite?.email}</span>
+            <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg px-3 py-2">
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Joining as <span className="font-medium text-gray-700 dark:text-gray-300">{invite?.email}</span>
               </p>
             </div>
 
@@ -112,10 +112,10 @@ export function AcceptInvitePage() {
 
 function InviteError({ message }: { message: string }) {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center p-4">
       <div className="text-center max-w-sm">
         <div className="text-5xl mb-4">🔗</div>
-        <h1 className="text-xl font-semibold text-gray-900 mb-2">
+        <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
           Invalid invitation
         </h1>
         <p className="text-sm text-gray-500">{message}</p>

@@ -4,7 +4,20 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/tuaka-logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>portal</title>
+    <title>TuaKa</title>
+    <script>
+      (function () {
+        try {
+          var k = 'tuaka_theme'
+          var p = localStorage.getItem(k) || 'system'
+          var dark =
+            p === 'dark' ||
+            (p === 'system' &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches)
+          document.documentElement.classList.toggle('dark', dark)
+        } catch (e) {}
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

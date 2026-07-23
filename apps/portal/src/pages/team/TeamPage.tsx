@@ -74,7 +74,7 @@ export function TeamPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-xl font-semibold text-gray-900">Team</h1>
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Team</h1>
           <p className="text-sm text-gray-500 mt-0.5">
             {team?.members.length ?? 0} member{team?.members.length === 1 ? '' : 's'}
           </p>
@@ -87,9 +87,9 @@ export function TeamPage() {
       </div>
 
       {/* Members */}
-      <div className="bg-white rounded-xl border border-gray-100 overflow-hidden mb-4">
+      <div className="bg-white rounded-xl border border-gray-100 dark:border-gray-700 dark:bg-gray-800 overflow-hidden mb-4">
         <div className="px-5 py-3 border-b border-gray-100">
-          <h2 className="text-sm font-semibold text-gray-700">Members</h2>
+          <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300">Members</h2>
         </div>
         <div className="divide-y divide-gray-50">
           {team?.members.map((member) => {
@@ -115,7 +115,7 @@ export function TeamPage() {
                     {member.name.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
                       {member.name}
                       {isSelf && (
                         <span className="ml-1.5 text-xs text-gray-400">(you)</span>
@@ -132,7 +132,7 @@ export function TeamPage() {
 
                   {canChangeRole && (
                     <select
-                      className="text-xs border border-gray-200 rounded-md px-2 py-1 text-gray-600 outline-none focus:border-brand-400"
+                      className="text-xs border border-gray-200 rounded-md px-2 py-1 text-gray-600 outline-none focus:border-brand-400 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300"
                       value={member.role}
                       onChange={(e) =>
                         updateRole({
@@ -172,9 +172,9 @@ export function TeamPage() {
 
       {/* Pending invites */}
       {(team?.pending.length ?? 0) > 0 && (
-        <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-xl border border-gray-100 dark:border-gray-700 dark:bg-gray-800 overflow-hidden">
           <div className="px-5 py-3 border-b border-gray-100">
-            <h2 className="text-sm font-semibold text-gray-700">
+            <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
               Pending invites
             </h2>
           </div>
@@ -185,7 +185,7 @@ export function TeamPage() {
                 className="flex items-center justify-between px-5 py-4"
               >
                 <div>
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
                     {invite.email}
                   </p>
                   <p className="text-xs text-gray-500 mt-0.5">
@@ -222,11 +222,11 @@ export function TeamPage() {
       >
         <form className="flex flex-col gap-4" onSubmit={handleInvite}>
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-gray-700">Email</label>
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
             <input
               required
               autoFocus
-              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20"
+              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
               placeholder="colleague@example.com"
               type="email"
               value={inviteEmail}
@@ -235,9 +235,9 @@ export function TeamPage() {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-gray-700">Role</label>
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Role</label>
             <select
-              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-brand-400"
+              className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-brand-400 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
               value={inviteRole}
               onChange={(e) => setInviteRole(e.target.value as 'admin' | 'member')}
             >

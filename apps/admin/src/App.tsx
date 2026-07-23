@@ -22,10 +22,10 @@ export default function App() {
   return (
     <Sentry.ErrorBoundary
       fallback={({ error, resetError }) => (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center p-4">
           <div className="text-center max-w-sm">
             <div className="text-5xl mb-4">⚠️</div>
-            <h1 className="text-xl font-semibold text-gray-900 mb-2">
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
               Something went wrong
             </h1>
             <p className="text-sm text-gray-500 mb-6">

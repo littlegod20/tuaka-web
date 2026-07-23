@@ -71,20 +71,20 @@ export function BillingPage() {
   return (
     <div className="max-w-4xl">
       <div className="mb-6">
-        <h1 className="text-xl font-semibold text-gray-900">Billing & Plans</h1>
+        <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Billing & Plans</h1>
         <p className="text-sm text-gray-500 mt-0.5">
           Manage your TuaKa subscription
         </p>
       </div>
 
       {/* Current plan banner */}
-      <div className="mb-6 rounded-xl border border-gray-100 bg-white p-5">
+      <div className="mb-6 rounded-xl border border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800 p-5">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
             <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
               Current plan
             </p>
-            <p className="text-lg font-bold text-gray-900">
+            <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
               {subscription?.plan?.name ?? 'Free'}
               {isTrialing && (
                 <span className="ml-2 text-sm font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
@@ -137,12 +137,12 @@ export function BillingPage() {
           return (
             <div
               key={plan.id}
-              className={`relative bg-white rounded-xl border-2 p-5 flex flex-col ${
+              className={`relative bg-white dark:bg-gray-800 rounded-xl border-2 p-5 flex flex-col ${
                 isPopular
                   ? 'border-brand-400 shadow-md'
                   : isCurrent
-                  ? 'border-green-200'
-                  : 'border-gray-100'
+                  ? 'border-green-200 dark:border-green-800'
+                  : 'border-gray-100 dark:border-gray-700'
               }`}
             >
               {isPopular && (
@@ -154,13 +154,13 @@ export function BillingPage() {
               )}
 
               <div className="mb-4">
-                <h3 className="font-bold text-gray-900 text-lg">{plan.name}</h3>
+                <h3 className="font-bold text-gray-900 dark:text-gray-100 text-lg">{plan.name}</h3>
                 <div className="mt-2">
                   {plan.price_monthly === 0 ? (
-                    <span className="text-2xl font-bold text-gray-900">Free</span>
+                    <span className="text-2xl font-bold text-gray-900 dark:text-gray-100">Free</span>
                   ) : (
                     <>
-                      <span className="text-2xl font-bold text-gray-900">
+                      <span className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                         {formatGHS(plan.price_monthly)}
                       </span>
                       <span className="text-sm text-gray-400">/month</span>
@@ -176,7 +176,7 @@ export function BillingPage() {
                       (plan.features ?? {}) as Record<string, string>,
                     )
                 ).map((feature, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
+                  <li key={i} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400">
                     <span className="text-green-500 mt-0.5 shrink-0">✓</span>
                     {feature}
                   </li>

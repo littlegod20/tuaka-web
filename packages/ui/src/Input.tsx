@@ -66,9 +66,10 @@ export function Input({
   const resolvedType = passwordToggle ? (showPassword ? 'text' : 'password') : type
 
   const inputClasses = `
-    w-full rounded-lg border px-3 py-2 text-sm text-gray-900
+    w-full rounded-lg border bg-white px-3 py-2 text-sm text-gray-900
     placeholder-gray-400 outline-none transition-colors
     focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20
+    dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500
     ${error ? 'border-red-400' : 'border-gray-200'}
     ${passwordToggle ? 'pr-10' : ''}
     ${className}
@@ -81,7 +82,7 @@ export function Input({
   return (
     <div className="flex flex-col gap-1">
       {label && (
-        <label className="text-sm font-medium text-gray-700" htmlFor={props.id}>
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300" htmlFor={props.id}>
           {label}
         </label>
       )}
@@ -90,7 +91,7 @@ export function Input({
           {inputEl}
           <button
             type="button"
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded p-1 text-gray-400 transition-colors hover:text-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/40"
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded p-1 text-gray-400 transition-colors hover:text-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/40 dark:text-gray-500 dark:hover:text-gray-300"
             aria-label={showPassword ? 'Hide password' : 'Show password'}
             onMouseDown={(e) => {
               /* keep focus on the input */
@@ -108,7 +109,9 @@ export function Input({
       ) : (
         inputEl
       )}
-      {hint && !error && <p className="text-xs text-gray-400">{hint}</p>}
+      {hint && !error && (
+        <p className="text-xs text-gray-400 dark:text-gray-500">{hint}</p>
+      )}
       {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   )

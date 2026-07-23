@@ -23,11 +23,16 @@ const STATUS_TABS = [
 ]
 
 const STATUS_STYLES: Record<string, string> = {
-  draft:   'bg-gray-100 text-gray-600',
-  sent:    'bg-blue-50 text-blue-600',
-  viewed:  'bg-purple-50 text-purple-600',
-  paid:    'bg-green-50 text-green-600',
-  overdue: 'bg-red-50 text-red-600',
+  draft:
+    'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300',
+  sent:
+    'bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-300',
+  viewed:
+    'bg-purple-50 text-purple-600 dark:bg-purple-950/60 dark:text-purple-300',
+  paid:
+    'bg-green-50 text-green-600 dark:bg-green-950/60 dark:text-green-300',
+  overdue:
+    'bg-red-50 text-red-600 dark:bg-red-950/60 dark:text-red-300',
 }
 
 export function InvoicesPage() {
@@ -72,7 +77,7 @@ export function InvoicesPage() {
       id: 'client',
       header: 'Client',
       cell: (row) => (
-        <span className="text-gray-700">{row.client?.name ?? '—'}</span>
+        <span className="text-gray-700 dark:text-gray-300">{row.client?.name ?? '—'}</span>
       ),
     },
     {
@@ -103,7 +108,7 @@ export function InvoicesPage() {
       headerClassName: 'text-right',
       className: 'text-right',
       cell: (row) => (
-        <span className="font-medium tabular-nums text-gray-900">
+        <span className="font-medium tabular-nums text-gray-900 dark:text-gray-100">
           {formatGHS(row.total)}
         </span>
       ),
@@ -115,7 +120,7 @@ export function InvoicesPage() {
       cell: (row) => (
         <div className="flex justify-end gap-1">
           <button
-            className="text-gray-400 hover:text-gray-700 px-2 py-1 rounded text-xs transition-colors"
+            className="text-gray-400 hover:text-gray-700 px-2 py-1 rounded text-xs transition-colors dark:text-gray-500 dark:hover:text-gray-300"
             onClick={() => navigate(`/invoices/${row.id}/edit`)}
           >
             Edit
@@ -154,7 +159,7 @@ export function InvoicesPage() {
       {/* Header — stack title and actions on narrow viewports */}
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-gray-900">Invoices</h1>
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Invoices</h1>
           <p className="text-sm text-gray-500 mt-0.5">
             {data?.meta.total ?? 0} total
           </p>
@@ -172,7 +177,7 @@ export function InvoicesPage() {
       {/* Status tabs — horizontal scroll keeps narrow layout compact */}
       <nav
         aria-label="Filter invoices by status"
-        className="mb-4 overflow-x-auto overscroll-x-contain border-b border-gray-100 touch-pan-x"
+        className="mb-4 overflow-x-auto overscroll-x-contain border-b border-gray-100 touch-pan-x dark:border-gray-700"
       >
         <div className="flex w-max gap-1">
           {STATUS_TABS.map((tab) => (
@@ -181,8 +186,8 @@ export function InvoicesPage() {
               type="button"
               className={`-mb-px shrink-0 whitespace-nowrap border-b-2 px-3 py-2 text-sm font-medium transition-colors ${
                 status === tab.value
-                  ? 'border-brand-400 text-brand-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
+                  ? 'border-brand-400 text-brand-600 dark:text-brand-400'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
               }`}
               onClick={() => {
                 setStatus(tab.value)
@@ -198,9 +203,10 @@ export function InvoicesPage() {
       {/* Search */}
       <div className="mb-4">
         <input
-          className="w-full max-w-sm rounded-lg border border-gray-200 px-3 py-2 text-sm
-            text-gray-900 placeholder-gray-400 outline-none
-            focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20"
+          className="w-full max-w-sm rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm
+            text-gray-900 outline-none placeholder:text-gray-400
+            focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20
+            dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500"
           placeholder="Search by number or client…"
           value={search}
           onChange={(e) => { setSearch(e.target.value); setPage(1) }}
@@ -213,7 +219,7 @@ export function InvoicesPage() {
         rows={data?.data ?? []}
         isLoading={isLoading}
         emptyContent={
-          <p className="text-gray-400 text-sm">
+          <p className="text-sm text-gray-400 dark:text-gray-500">
             {debouncedSearch || status
               ? 'No invoices match your filters.'
               : 'No invoices yet. Create your first one.'}
