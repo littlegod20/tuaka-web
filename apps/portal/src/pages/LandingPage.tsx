@@ -577,8 +577,8 @@ export function LandingPage() {
           <div className="flex flex-wrap items-center justify-between gap-3 pt-6 text-[13px] text-brand-50/45">
             <div>© {new Date().getFullYear()} TuaKa. All rights reserved.</div>
             <div className="flex gap-6">
-              <a className="hover:text-brand-100" href="#">Privacy</a>
-              <a className="hover:text-brand-100" href="#">Terms</a>
+              <a className="hover:text-brand-100" href="/privacy">Privacy</a>
+              <a className="hover:text-brand-100" href="/terms">Terms</a>
             </div>
           </div>
         </div>

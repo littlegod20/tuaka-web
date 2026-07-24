@@ -20,6 +20,8 @@ import { BillingPage } from './pages/billing/BillingPage'
 import { AcceptInvitePage } from './pages/invite/AcceptInvitePage'
 import { TeamPage } from './pages/team/TeamPage'
 import * as Sentry from '@sentry/react'
+import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicyPage'
+import { TermsOfServicePage } from './pages/legal/TermsOfServicePage'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const {data: me, isLoading} = useMe()
@@ -62,6 +64,8 @@ export default function App() {
     <Routes>
       <Route element={<LandingPage />} path="/" />
       <Route element={<LoginPage />} path="/login" />
+      <Route element={<PrivacyPolicyPage />} path="/privacy" />
+      <Route element={<TermsOfServicePage />} path="/terms" />
       <Route element={<RegisterPage />} path="/register" />
       <Route element={<ForgotPasswordPage />} path="/forgot-password" />
       <Route element={<ResetPasswordPage />} path="/reset-password" />

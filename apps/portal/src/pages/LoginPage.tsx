@@ -114,6 +114,13 @@ export function LoginPage() {
             Create your workspace
           </Link>
         </p>
+
+        <p className="text-center text-xs text-gray-400 mt-6">
+          By continuing you agree to our{' '}
+          <a href="/terms" className="underline hover:text-gray-600">Terms of Service</a>
+          {' '}and{' '}
+          <a href="/privacy" className="underline hover:text-gray-600">Privacy Policy</a>
+        </p>
       </div>
     </div>
   )
