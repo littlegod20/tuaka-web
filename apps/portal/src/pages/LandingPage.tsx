@@ -275,9 +275,7 @@ export function LandingPage() {
         />
         <div className="relative z-10 mx-auto grid max-w-[1360px] grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-[60px]">
           <div>
-            <div className="landing-fade-up inline-flex items-center gap-2 rounded-full border border-brand-100/25 bg-brand-100/10 px-3.5 py-1.5 text-[13px] font-semibold text-brand-100">
-              Built for Paystack &amp; MoMo
-            </div>
+            
             <h1 className="landing-fade-up mt-6 text-[36px] font-bold leading-[1.12] tracking-tight text-white sm:text-[44px] lg:text-[52px]" style={{ animationDelay: '0.08s' }}>
               Invoicing built for how West African businesses actually get paid.
             </h1>
