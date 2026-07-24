@@ -225,7 +225,9 @@ export function LandingPage() {
       {/* Nav */}
       <nav className="sticky top-0 z-50 border-b border-brand-900/[0.08] bg-white/90 backdrop-blur-md">
         <div className="flex items-center justify-between gap-4 px-6 py-4 sm:px-8">
-          <div className="font-logo text-2xl font-bold tracking-tight text-brand-600">TuaKa</div>
+          <div className="font-logo text-2xl tracking-tight text-gray-900">
+            Tua<span className="text-brand-600">Ka</span>
+          </div>
           <div className="hidden items-center gap-6 md:flex md:gap-10">
             <a className="text-sm font-medium text-brand-900/75 hover:text-brand-400" href="#payments">Payments</a>
             <a className="text-sm font-medium text-brand-900/75 hover:text-brand-400" href="#teams">Teams</a>
@@ -556,7 +558,9 @@ export function LandingPage() {
         <div className="mx-auto max-w-[1360px]">
           <div className="grid grid-cols-2 gap-x-6 gap-y-10 border-b border-white/10 pb-12 lg:grid-cols-4">
             <div className="col-span-2 lg:col-span-1">
-              <div className="mb-3 font-logo text-2xl font-bold text-brand-100">TuaKa</div>
+              <div className="mb-3 font-logo text-2xl text-white">
+                Tua<span className="text-brand-100">Ka</span>
+              </div>
               <div className="max-w-[280px] text-sm leading-relaxed text-brand-50/55">
                 Invoicing and payments built for West African SMBs.
               </div>

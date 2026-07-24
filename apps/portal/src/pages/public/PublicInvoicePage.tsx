@@ -46,7 +46,7 @@ export function PublicInvoicePage() {
       <div className="border-b border-gray-100 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-900">
         <div className="mx-auto flex max-w-3xl flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <span className="text-lg font-logo text-gray-900 dark:text-gray-100">
-            Tua<span className="text-brand-400">Ka</span>
+            Tua<span className="text-brand-600">Ka</span>
           </span>
           <span className="text-sm text-gray-500 dark:text-gray-400">
             Powered by TuaKa

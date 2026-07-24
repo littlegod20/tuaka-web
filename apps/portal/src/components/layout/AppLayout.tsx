@@ -358,7 +358,7 @@ export function AppLayout() {
         >
           {!collapsed && (
             <span className="text-lg font-logo text-gray-900 dark:text-gray-100">
-              Tua<span className="text-brand-400">Ka</span>
+              Tua<span className="text-brand-600">Ka</span>
             </span>
           )}
           <button

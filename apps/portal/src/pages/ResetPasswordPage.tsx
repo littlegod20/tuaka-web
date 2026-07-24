@@ -79,7 +79,7 @@ export function ResetPasswordPage() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <span className="text-3xl font-logo text-gray-900 dark:text-gray-100">
-            Tua<span className="text-brand-400">Ka</span>
+            Tua<span className="text-brand-600">Ka</span>
           </span>
           <p className="mt-2 text-sm text-gray-500">Choose a new password</p>
         </div>
