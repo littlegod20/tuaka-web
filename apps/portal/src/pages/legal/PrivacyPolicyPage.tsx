@@ -6,8 +6,8 @@ export function PrivacyPolicyPage() {
         {/* Header */}
         <div className="bg-white border-b border-gray-100">
           <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-            <a href="/" className="text-xl font-bold text-brand-900">
-              TuaKa
+            <a href="/" className="text-xl font-logo text-gray-900">
+              Tua<span className="text-brand-400">Ka</span>
             </a>
             <a href="/login" className="text-sm text-brand-500 hover:underline">
               Sign in

@@ -147,9 +147,9 @@ export function RegisterPage() {
 
         <p className="text-center text-xs text-gray-400 mt-6">
           By continuing you agree to our{' '}
-          <a href="/terms" className="underline hover:text-gray-600">Terms of Service</a>
+          <a href="/terms" className="text-brand-500 hover:underline font-medium">Terms of Service</a>
           {' '}and{' '}
-          <a href="/privacy" className="underline hover:text-gray-600">Privacy Policy</a>
+          <a href="/privacy" className="text-brand-500 hover:underline font-medium">Privacy Policy</a>
         </p>
       </div>
     </div>
