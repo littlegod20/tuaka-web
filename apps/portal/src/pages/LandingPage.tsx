@@ -168,14 +168,14 @@ const PRICING_TIERS: PricingTier[] = [
   {
     name: 'Starter',
     blurb: 'For small teams ready to grow',
-    price: 'GH₵99',
+    price: 'GH₵35',
     features: ['Unlimited invoices', 'PDF downloads', 'MoMo payments', 'Up to 3 team members', 'Email support'],
     highlighted: true,
   },
   {
     name: 'Growth',
     blurb: 'For teams that need more room to grow',
-    price: 'GH₵199',
+    price: 'GH₵75',
     features: ['Unlimited invoices', 'PDF downloads', 'MoMo payments', 'Up to 10 team members', 'Priority support', 'Custom invoice prefix'],
   },
 ]
