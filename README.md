@@ -16,6 +16,7 @@
 - [Packages](#packages)
 - [Git workflow](#git-workflow)
 - [Roadmap](#roadmap)
+- [Related repositories](#related-repositories)
 
 ---
 
@@ -31,7 +32,7 @@ The platform has three distinct user types:
 | Business owner | Pays for a subscription, creates invoices     | `{slug}.tuaka.app`     |
 | Client         | Receives and pays invoices                    | Public link — no login |
 
-This repository contains the **frontend monorepo** only. The Laravel API lives in a separate repo (`tuaka-api`).
+This repository contains the **frontend monorepo** only. The Laravel API lives in a separate repo ([`tuaka-api`](https://github.com/littlegod20/tuaka-api)).
 
 ---
 
@@ -296,9 +297,9 @@ git push origin feature/invoice-creation
 
 ## Related repositories
 
-| Repository  | Description                                           |
-| ----------- | ----------------------------------------------------- |
-| `tuaka-api` | Laravel 11 REST API — auth, invoices, billing, queues |
+| Repository | Description |
+| ---------- | ----------- |
+| [`tuaka-api`](https://github.com/littlegod20/tuaka-api) | Laravel 11 REST API — auth, invoices, billing, queues |
 
 ---
 
