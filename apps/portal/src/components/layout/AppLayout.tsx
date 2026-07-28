@@ -131,6 +131,41 @@ function IconSignOut({ className }: { className?: string }) {
   )
 }
 
+function IconUser({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      viewBox="0 0 24 24"
+    >
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </svg>
+  )
+}
+
+function IconChevronUp({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      viewBox="0 0 24 24"
+    >
+      <path d="m18 15-6-6-6 6" />
+    </svg>
+  )
+}
+
 /** Sidebar rail icon: suggests toggling the panel */
 function IconSidebar({ className }: { className?: string }) {
   return (
@@ -242,6 +277,7 @@ export function AppLayout() {
   const [showSignOutModal, setShowSignOutModal] = useState(false)
   const [paletteOpen, setPaletteOpen] = useState(false)
   const [moreMenuOpen, setMoreMenuOpen] = useState(false)
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false)
   const location = useLocation()
 
   const [collapsed, setCollapsed] = useState(() => {
@@ -321,18 +357,23 @@ export function AppLayout() {
 
   useEffect(() => {
     setMoreMenuOpen(false)
+    setProfileMenuOpen(false)
   }, [location.pathname])
 
   useEffect(() => {
-    if (!moreMenuOpen) return
+    if (!moreMenuOpen && !profileMenuOpen) return
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') setMoreMenuOpen(false)
+      if (e.key === 'Escape') {
+        setMoreMenuOpen(false)
+        setProfileMenuOpen(false)
+      }
     }
     document.addEventListener('keydown', onKeyDown)
     return () => document.removeEventListener('keydown', onKeyDown)
-  }, [moreMenuOpen])
+  }, [moreMenuOpen, profileMenuOpen])
 
   const isUnverified = me?.user && !me.user.email_verified_at
+  const userName = me?.user.name ?? 'Account'
 
   const mobileNavLinkClass = ({ isActive }: { isActive: boolean }) =>
     cn(
@@ -398,19 +439,67 @@ export function AppLayout() {
           ))}
         </nav>
 
-        <div className="border-t border-gray-100 p-2 dark:border-gray-800">
-          <CollapsedTooltip label="Sign out" show={collapsed}>
+        <div className="relative border-t border-gray-100 p-2 dark:border-gray-800">
+          {profileMenuOpen && (
+            <>
+              <button
+                aria-label="Close profile menu"
+                className="fixed inset-0 z-40 cursor-default"
+                type="button"
+                onClick={() => setProfileMenuOpen(false)}
+              />
+              <div
+                className={cn(
+                  'absolute z-50 rounded-xl border border-gray-200 bg-white p-1 shadow-lg dark:border-gray-700 dark:bg-gray-800',
+                  collapsed
+                    ? 'bottom-0 left-full ml-2 min-w-[10rem]'
+                    : 'bottom-full left-2 right-2 mb-1',
+                )}
+                role="menu"
+              >
+                <button
+                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700/50 dark:hover:text-gray-100"
+                  role="menuitem"
+                  type="button"
+                  onClick={() => {
+                    setProfileMenuOpen(false)
+                    setShowSignOutModal(true)
+                  }}
+                >
+                  <IconSignOut className="h-4 w-4 shrink-0" />
+                  Sign out
+                </button>
+              </div>
+            </>
+          )}
+
+          <CollapsedTooltip label={userName} show={collapsed}>
             <button
-              aria-label={collapsed ? 'Sign out' : undefined}
+              aria-expanded={profileMenuOpen}
+              aria-haspopup="menu"
+              aria-label={collapsed ? userName : undefined}
               className={cn(
-                'flex w-full items-center rounded-lg text-sm text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200',
-                collapsed ? 'justify-center px-2 py-2.5' : 'gap-3 px-3 py-2 text-left',
+                'flex w-full items-center rounded-lg text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800',
+                collapsed ? 'justify-center px-2 py-2.5' : 'gap-3 px-2.5 py-2 text-left',
+                profileMenuOpen && 'bg-gray-50 dark:bg-gray-800',
               )}
               type="button"
-              onClick={() => setShowSignOutModal(true)}
+              onClick={() => setProfileMenuOpen((open) => !open)}
             >
-              <IconSignOut className="h-5 w-5 shrink-0" />
-              {!collapsed && <span>Sign out</span>}
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600 dark:bg-brand-950/50 dark:text-brand-400">
+                <IconUser className="h-4 w-4" />
+              </span>
+              {!collapsed && (
+                <>
+                  <span className="min-w-0 flex-1 truncate font-medium">{userName}</span>
+                  <IconChevronUp
+                    className={cn(
+                      'h-4 w-4 shrink-0 text-gray-400 transition-transform',
+                      !profileMenuOpen && 'rotate-180',
+                    )}
+                  />
+                </>
+              )}
             </button>
           </CollapsedTooltip>
         </div>
